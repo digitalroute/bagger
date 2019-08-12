@@ -3,7 +3,7 @@ import bagger from '../lib/bagger';
 import { JSONSchema7 } from 'json-schema';
 import * as joi from '@hapi/joi';
 
-test('Creating a bagger response will return isBagger = true', t => {
+test('Creating a bagger response does return isBagger = true', t => {
   const response = bagger.response(200);
   t.is(response.isBagger, true);
 });

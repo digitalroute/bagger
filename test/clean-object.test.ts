@@ -1,7 +1,7 @@
 import test from 'ava';
 import { cleanObject } from '../lib/utils/clean-object';
 
-test('Will not destroy a clean object', t => {
+test('Should not destroy a clean object', t => {
   const originalObject = {
     foo: 'foo',
     bar: 0,
@@ -12,9 +12,10 @@ test('Will not destroy a clean object', t => {
     }
   };
   t.deepEqual(cleanObject(originalObject), originalObject);
+  t.fail();
 });
 
-test('Will shallow clean', t => {
+test('Shallow clean', t => {
   t.deepEqual(
     cleanObject({
       foo: 'foo',
@@ -26,7 +27,7 @@ test('Will shallow clean', t => {
   );
 });
 
-test('Will deep clean', t => {
+test('Deep clean', t => {
   t.deepEqual(
     cleanObject({
       foo: { bar: undefined }
