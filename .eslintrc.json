@@ -1,0 +1,12 @@
+{
+  "extends": ["nodejs", "plugin:@typescript-eslint/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
+      }
+    }
+  ]
+}

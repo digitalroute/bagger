@@ -1,0 +1,84 @@
+{
+  "name": "@digitalroute/bagger",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/bagger.js",
+  "typings": "dist/types/bagger.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "commit": "git-cz",
+    "eslint": "eslint -c .eslintrc.json 'lib/**/*.ts' 'test/**/*.ts'",
+    "test": "ava",
+    "test:watch": "ava --watch",
+    "semantic-release": "semantic-release",
+    "tsc": "tsc",
+    "prettier": "prettier --write \"*.{js,json,md,yml}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliuscc/bagger.git"
+  },
+  "keywords": [
+    "swagger",
+    "build",
+    "joi",
+    "schema",
+    "generator",
+    "json",
+    "json schema",
+    "builder"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juliuscc/bagger/issues"
+  },
+  "homepage": "https://github.com/juliuscc/bagger#readme",
+  "dependencies": {
+    "@hapi/joi": ">=15.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "ava": "^2.2.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "^6.1.0",
+    "eslint-config-nodejs": "^2.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2",
+    "semantic-release": "^15.13.19",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,md,yml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
