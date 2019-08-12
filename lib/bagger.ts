@@ -1,9 +1,12 @@
 import { BaggerResponse } from './response';
 import { BaggerRequest } from './request';
+import { SchemaObject } from 'openapi3-ts';
+import { compile } from './compile';
 
 export const bagger = {
   response: (httpCode: number) => new BaggerResponse(httpCode),
-  request: () => new BaggerRequest()
+  request: () => new BaggerRequest(),
+  compile
 };
 
 export default bagger;
