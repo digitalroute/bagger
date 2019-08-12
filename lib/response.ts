@@ -2,21 +2,18 @@ import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean-object';
 import { Schema } from '@hapi/joi';
 import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
-
-type InternalContent = {
-  mediaType: string;
-  schema: any;
-};
+import { Content } from './content';
+import { SchemaObject } from 'openapi3-ts';
 
 type Internals = {
   httpCode: number;
   description?: string;
-  content?: InternalContent;
+  content?: Content;
 };
 
 type CompiledContent = {
   [key: string]: {
-    schema: any;
+    schema: SchemaObject;
   };
 };
 
@@ -26,10 +23,6 @@ type CompiledResponse = {
     content?: CompiledContent;
   };
 };
-
-function isJoi(schema: any): schema is Schema {
-  return schema.isJoi;
-}
 
 export class BaggerResponse {
   public readonly isBagger = true;
@@ -47,31 +40,15 @@ export class BaggerResponse {
   }
 
   public content(mediaType: string, schema: JSONSchema7 | Schema): BaggerResponse {
-    if (isJoi(schema)) {
-      this.internals.content = { mediaType, schema: createSwaggerDefinition(schema) };
-    } else {
-      this.internals.content = { mediaType, schema };
-    }
+    this.internals.content = new Content(mediaType, schema);
     return this;
-  }
-
-  private static compileContent(content: InternalContent | undefined): CompiledContent | undefined {
-    if (content === undefined) {
-      return undefined;
-    }
-    const { mediaType, schema } = content;
-    return {
-      [mediaType]: {
-        schema
-      }
-    };
   }
 
   public compile(): CompiledResponse {
     const compiledPolluted = {
       [this.internals.httpCode]: {
         description: this.internals.description,
-        content: BaggerResponse.compileContent(this.internals.content)
+        content: this.internals.content && this.internals.content.compile()
       }
     };
 

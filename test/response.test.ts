@@ -22,15 +22,7 @@ test('Responses could have contents that have a specified type', t => {
 
   const response = bagger.response(200).content('application/json', schema);
 
-  t.deepEqual(response.compile(), {
-    200: {
-      content: {
-        'application/json': {
-          schema
-        }
-      }
-    }
-  });
+  t.snapshot(response.compile());
 });
 
 test('Response content can be a joi-object', t => {
