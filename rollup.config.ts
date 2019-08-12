@@ -15,10 +15,8 @@ export default {
     { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
-  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ['dgram', 'net'],
   watch: {
-    include: 'src/**'
+    include: 'lib/**'
   },
   plugins: [
     // Allow json resolution
