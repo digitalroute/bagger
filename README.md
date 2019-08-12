@@ -22,22 +22,22 @@ WIP
 const bagger = require('bagger');
 const joi = require('@hapi/joi');
 
-const getHats = bagger
+const getBags = bagger
   .request()
   .method('get')
-  .path('/hats')
-  .tag('hats')
+  .path('/bags')
+  .tag('bags')
   .tag('build')
   .responses([
     bagger
       .response(200)
-      .description('Successfully fetched all hats')
+      .description('Successfully fetched all bags')
       .content(
         'application/json',
         joi
           .array()
           .items(joi.string())
-          .example(['yellow hat', 'orange hat'])
+          .example(['handbag', 'backpack'])
       )
   ]);
 
@@ -47,7 +47,7 @@ const swaggerConfig = {
   description: 'Provides resources for building swagger definitions'
 };
 
-const swaggerDefinition = bagger.compile(swaggerConfig, [getHats]);
+const swaggerDefinition = bagger.compile(swaggerConfig, [getBags]);
 ```
 
 ## Installation
