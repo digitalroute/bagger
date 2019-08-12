@@ -12,7 +12,6 @@ test('Should not destroy a clean object', t => {
     }
   };
   t.deepEqual(cleanObject(originalObject), originalObject);
-  t.fail();
 });
 
 test('Shallow clean', t => {
