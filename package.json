@@ -37,9 +37,12 @@
   },
   "homepage": "https://github.com/juliuscc/bagger#readme",
   "dependencies": {
-    "@hapi/joi": ">=15.0.0"
+    "joi": "^14.3.1",
+    "joi-to-swagger": "^3.2.0"
   },
   "devDependencies": {
+    "@hapi/joi": "^15.1.0",
+    "@types/hapi__joi": "^15.0.3",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "ava": "^2.2.0",

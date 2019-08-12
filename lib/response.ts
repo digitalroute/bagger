@@ -1,9 +1,11 @@
 import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean-object';
+import { Schema } from '@hapi/joi';
+import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
 
 type InternalContent = {
   mediaType: string;
-  schema: JSONSchema7;
+  schema: any;
 };
 
 type Internals = {
@@ -14,7 +16,7 @@ type Internals = {
 
 type CompiledContent = {
   [key: string]: {
-    schema: JSONSchema7;
+    schema: any;
   };
 };
 
@@ -24,6 +26,10 @@ type CompiledResponse = {
     content?: CompiledContent;
   };
 };
+
+function isJoi(schema: any): schema is Schema {
+  return schema.isJoi;
+}
 
 export class BaggerResponse {
   public readonly isBagger = true;
@@ -40,8 +46,12 @@ export class BaggerResponse {
     return this;
   }
 
-  public content(mediaType: string, schema: JSONSchema7): BaggerResponse {
-    this.internals.content = { mediaType, schema };
+  public content(mediaType: string, schema: JSONSchema7 | Schema): BaggerResponse {
+    if (isJoi(schema)) {
+      this.internals.content = { mediaType, schema: createSwaggerDefinition(schema) };
+    } else {
+      this.internals.content = { mediaType, schema };
+    }
     return this;
   }
 
