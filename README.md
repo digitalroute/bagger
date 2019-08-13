@@ -1,4 +1,4 @@
-# Bagger
+# 🎒 Bagger
 
 [![npm (scoped)](https://img.shields.io/npm/v/@digitalroute/bagger?style=flat-square)](https://www.npmjs.com/package/@digitalroute/bagger)
 [![npm](https://img.shields.io/npm/dm/@digitalroute/bagger)](https://www.npmjs.com/package/@digitalroute/bagger)
