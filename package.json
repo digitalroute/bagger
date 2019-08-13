@@ -1,7 +1,7 @@
 {
   "name": "@digitalroute/bagger",
   "version": "0.0.1",
-  "description": "",
+  "description": "🎒 A joi-compatible tool for building swagger definitions",
   "main": "dist/bagger.umd.js",
   "module": "dist/bagger.es5.js",
   "typings": "dist/types/bagger.d.ts",
@@ -20,6 +20,8 @@
     "semantic-release": "semantic-release",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
+    "generate-docs": "rimraf docs && typedoc --out docs --target es6 --mode file lib && touch ./docs/.nojekyll",
+    "gh-pages": "gh-pages -d docs -t",
     "prettier": "prettier --write \"*.{js,json,md,yml}\""
   },
   "repository": {
@@ -63,6 +65,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.15.1",
+    "gh-pages": "^2.1.1",
     "husky": "^3.0.3",
     "jest": "^24.8.0",
     "jest-config": "^24.8.0",
@@ -78,6 +81,7 @@
     "rollup-plugin-typescript2": "^0.22.1",
     "semantic-release": "^15.13.19",
     "ts-jest": "^24.0.2",
+    "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
   },
   "jest": {

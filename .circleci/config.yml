@@ -38,8 +38,15 @@ jobs:
           name: Build
           command: npm run build
       - run:
+          name: Build docs
+          command: npm run generate-docs
+      - run:
           name: Semantic Release
           command: npm run semantic-release
+      - run:
+          name: Deploy docs
+          working_directory: ~/docs
+          command: npm run gh-pages
 
 workflows:
   version: 2
@@ -56,3 +63,7 @@ workflows:
             branches:
               only:
                 - master
+
+branches:
+  ignore:
+    - gh-pages
