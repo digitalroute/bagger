@@ -28,6 +28,10 @@ export class Content {
     }
   }
 
+  /**
+   * Creates a compiled object representation of the content.
+   * @returns A Swagger content object
+   */
   public compile(): ContentObject {
     const { mediaType, schema } = this.internals;
     return {

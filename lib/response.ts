@@ -27,16 +27,29 @@ export class BaggerResponse {
     };
   }
 
+  /**
+   * Adds a description to the response.
+   * @param description
+   */
   public description(description: string): BaggerResponse {
     this.internals.description = description;
     return this;
   }
 
+  /**
+   * Adds a content description to the response, if the response includes a body.
+   * @param mediaType The media type of the body. Like 'application/json'
+   * @param schema A schema describing the format of the returned body. It can be a JSON Schema or a joi object.
+   */
   public content(mediaType: string, schema: JSONSchema7 | Schema): BaggerResponse {
     this.internals.content = new Content(mediaType, schema);
     return this;
   }
 
+  /**
+   * Creates a compiled object representation of the response.
+   * @returns A Swagger response object
+   */
   public compile(): CompiledResponse {
     const compiledPolluted = {
       [this.internals.httpCode]: {
