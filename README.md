@@ -1,7 +1,7 @@
 # 🎒 Bagger
 
 [![npm (scoped)](https://img.shields.io/npm/v/@digitalroute/bagger?style=flat-square)](https://www.npmjs.com/package/@digitalroute/bagger)
-[![npm](https://img.shields.io/npm/dm/@digitalroute/bagger)](https://www.npmjs.com/package/@digitalroute/bagger)
+[![npm](https://img.shields.io/npm/dm/@digitalroute/bagger?style=flat-square)](https://www.npmjs.com/package/@digitalroute/bagger)
 [![CircleCI](https://img.shields.io/circleci/build/github/digitalroute/bagger/master?style=flat-square)](https://circleci.com/gh/digitalroute/workflows/bagger)
 [![license](https://img.shields.io/github/license/digitalroute/bagger.svg?style=flat-square)](https://github.com/digitalroute/bagger/blob/master/LICENSE)
 
