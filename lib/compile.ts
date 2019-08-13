@@ -3,19 +3,21 @@ import {
   InfoObject,
   ServerObject,
   PathsObject,
-  ComponentsObject,
   SecurityRequirementObject,
-  ExternalDocumentationObject
+  ExternalDocumentationObject,
+  ComponentsObject
 } from 'openapi3-ts';
 import { BaggerRequest } from './request';
 
-type SwaggerConfiguration = {
+interface SwaggerConfiguration {
   info: InfoObject;
   servers?: ServerObject[];
   security?: SecurityRequirementObject[];
   externalDocs?: ExternalDocumentationObject;
-};
+}
 
+// TODO: Remove next line as this is a temporary eslint disable
+// eslint-disable-next-line
 function compileRequests(requests: BaggerRequest[]): PathsObject {
   return {};
 }
@@ -23,7 +25,7 @@ function compileRequests(requests: BaggerRequest[]): PathsObject {
 export function compile(
   configuration: SwaggerConfiguration,
   requests: BaggerRequest[],
-  components?: any
+  components?: ComponentsObject
 ): OpenAPIObject {
   const paths = compileRequests(requests);
 

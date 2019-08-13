@@ -1,34 +1,33 @@
 import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean-object';
 import { Schema } from '@hapi/joi';
-import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
 import { Content } from './content';
 import { SchemaObject } from 'openapi3-ts';
 
-type Internals = {
+interface Internals {
   httpCode: number;
   description?: string;
   content?: Content;
-};
+}
 
-type CompiledContent = {
+interface CompiledContent {
   [key: string]: {
     schema: SchemaObject;
   };
-};
+}
 
-type CompiledResponse = {
+interface CompiledResponse {
   [httpCode: string]: {
     description?: string;
     content?: CompiledContent;
   };
-};
+}
 
 export class BaggerResponse {
   public readonly isBagger = true;
   public internals: Internals;
 
-  constructor(httpCode: number) {
+  public constructor(httpCode: number) {
     this.internals = {
       httpCode
     };

@@ -1,6 +1,19 @@
 {
-  "extends": ["nodejs", "plugin:@typescript-eslint/recommended", "prettier"],
+  "extends": ["nodejs", "plugin:@typescript-eslint/recommended", "plugin:jest/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
+  "rules": {
+    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ]
+  },
+  "env": {
+    "jest/globals": true
+  },
   "overrides": [
     {
       "files": ["test/**/*.ts"],
