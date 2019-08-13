@@ -1,19 +1,18 @@
-import test from 'ava';
-import bagger from '../lib/bagger';
+import * as bagger from '../lib/bagger';
 
-test('An empty definition should compile', t => {
-  t.snapshot(
-    bagger.compile(
-      {
-        info: {
-          title: 'Bagger API',
-          version: 'v1',
-          description: 'Provides resources related to building swagger definitions'
-        }
-      },
-      []
-    )
-  );
+describe('Bagger compiler', () => {
+  test('An empty definition should compile', () => {
+    expect(
+      bagger.compile(
+        {
+          info: {
+            title: 'Bagger API',
+            version: 'v1',
+            description: 'Provides resources related to building swagger definitions'
+          }
+        },
+        []
+      )
+    ).toMatchSnapshot();
+  });
 });
-
-test.todo('Add support for compiling with tags');

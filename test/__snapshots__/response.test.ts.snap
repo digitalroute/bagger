@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Swagger Response Responses could have contents that have a specified type 1`] = `
+Object {
+  "200": Object {
+    "content": Object {
+      "application/json": Object {
+        "schema": Object {
+          "examples": Array [
+            "foo",
+          ],
+          "type": "string",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`Swagger Response Simple response can be compiled 1`] = `
+Object {
+  "200": Object {
+    "description": "Successfully fetched request",
+  },
+}
+`;

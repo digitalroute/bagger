@@ -1,7 +1,8 @@
-import test from 'ava';
-import bagger from '../lib/bagger';
+import * as bagger from '../lib/bagger';
 
-test('Create a request', t => {
-  const req = bagger.request();
-  t.is(req.isBagger, true);
+describe('Swagger Request', () => {
+  test('Create a request', () => {
+    const req = bagger.request();
+    expect(req.isBagger).toEqual(true);
+  });
 });

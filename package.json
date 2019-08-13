@@ -14,8 +14,9 @@
   "scripts": {
     "commit": "git-cz",
     "eslint": "eslint -c .eslintrc.json 'lib/**/*.ts' 'test/**/*.ts'",
-    "test": "ava",
-    "test:watch": "ava --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:prod": "npm run lint && npm run test -- --no-cache",
     "semantic-release": "semantic-release",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
@@ -50,9 +51,9 @@
   },
   "devDependencies": {
     "@hapi/joi": "^15.1.0",
+    "@types/jest": "^24.0.17",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
-    "ava": "^2.2.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
@@ -60,6 +61,8 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "husky": "^3.0.3",
+    "jest": "^24.8.0",
+    "jest-config": "^24.8.0",
     "lint-staged": "^9.2.1",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.18.2",
@@ -71,16 +74,21 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.22.1",
     "semantic-release": "^15.13.19",
-    "ts-node": "^8.3.0",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
   },
-  "ava": {
-    "compileEnhancements": false,
-    "extensions": [
-      "ts"
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": ".*\\.test\\.(ts)$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
     ],
-    "require": [
-      "ts-node/register"
+    "collectCoverageFrom": [
+      "lib/*/**.{ts}"
     ]
   },
   "husky": {
