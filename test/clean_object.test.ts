@@ -2,7 +2,7 @@ test('First test', () => {
   expect(true).toBe(true);
 });
 
-import { cleanObject } from '../lib/utils/clean-object';
+import { cleanObject } from '../lib/utils/clean_object';
 
 describe('Clean object', () => {
   test('Should not destroy a clean object', () => {

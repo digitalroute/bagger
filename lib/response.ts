@@ -1,8 +1,8 @@
 import { JSONSchema7 } from 'json-schema';
-import { cleanObject } from './utils/clean-object';
+import { cleanObject } from './utils/clean_object';
 import { Schema } from '@hapi/joi';
 import { Content } from './content';
-import { SchemaObject } from 'openapi3-ts';
+import { SchemaObject, ContentObject } from 'openapi3-ts';
 
 interface Internals {
   httpCode: number;
@@ -10,16 +10,10 @@ interface Internals {
   content?: Content;
 }
 
-interface CompiledContent {
-  [key: string]: {
-    schema: SchemaObject;
-  };
-}
-
 interface CompiledResponse {
   [httpCode: string]: {
     description?: string;
-    content?: CompiledContent;
+    content?: ContentObject;
   };
 }
 

@@ -1,6 +1,6 @@
 import { parse as validateContentType } from 'content-type';
 import { BaggerResponse } from './response';
-import { JoiObject } from '@hapi/joi';
+import { RequestBody, BaggerRequestBody } from './request_body';
 
 type Method = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'head' | 'trace' | 'connect';
 
@@ -21,6 +21,7 @@ type RequestContext = {
   security: Set<string>;
   produces: Set<string>;
   parameters?: ParameterContext[];
+  requestBody?: RequestBody | BaggerRequestBody;
   responses?: Set<BaggerResponse>;
 };
 
@@ -30,7 +31,7 @@ type CompiledMethodContent = {
   tags?: Set<string>;
   security?: Set<string>;
   produces?: Set<string>;
-  parameters?: ParameterContext[];
+  requestBody?: RequestBody;
   responses: Set<BaggerResponse>;
 };
 
@@ -96,15 +97,12 @@ export class BaggerRequest {
     return this;
   }
 
-  public query(joi: JoiObject): BaggerRequest {
-    return this;
-  }
-
-  public body(joi: JoiObject): BaggerRequest {
-    return this;
-  }
-
-  public pathParams(joi: JoiObject): BaggerRequest {
+  public body(requestBody: RequestBody | BaggerRequestBody): BaggerRequest {
+    if (!this.context.requestBody) {
+      this.context.requestBody = requestBody;
+    } else {
+      console.error('request body set multiple times');
+    }
     return this;
   }
 
@@ -119,9 +117,22 @@ export class BaggerRequest {
   public compile(): CompiledRequest {
     const obj: any = {};
     const ctxt: any = (obj[this.context.path] = {});
-    const v = this.context as CompiledMethodContent;
+    const v: any = this.context as CompiledMethodContent;
     this.context.methods.forEach((value: Method, _: Method, _set: Set<Method>) => {
-      ctxt[value] = v;
+      const newVal = Object.keys(v).reduce(
+        (prev, curr) => {
+          let val: any = v[curr];
+          if (typeof v[curr].compile === 'function') {
+            val = v[curr].compile();
+          } else if (v[curr] instanceof Set) {
+            val = Array.from(v[curr]);
+          }
+          prev[curr] = val;
+          return prev;
+        },
+        {} as any
+      );
+      ctxt[value] = newVal;
     });
     return obj;
   }
