@@ -26,7 +26,7 @@ jobs:
           command: npm run eslint
       - run:
           name: Run tests
-          command: npm run test
+          command: npm run test:prod
   deploy:
     docker:
       - image: circleci/node:10.5.0
@@ -34,6 +34,9 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Build
+          command: npm run build
       - run:
           name: Semantic Release
           command: npm run semantic-release

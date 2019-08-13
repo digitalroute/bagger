@@ -16,7 +16,7 @@
     "eslint": "eslint -c .eslintrc.json 'lib/**/*.ts' 'test/**/*.ts'",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:prod": "npm run lint && npm run test -- --no-cache",
+    "test:prod": "npm run test -- --no-cache",
     "semantic-release": "semantic-release",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
@@ -107,5 +107,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "release": {
+    "branch": "master"
   }
 }
