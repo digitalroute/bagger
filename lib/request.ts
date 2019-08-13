@@ -1,10 +1,8 @@
+import { parse as validateContentType } from 'content-type';
 import { BaggerResponse } from './response';
+import { JoiObject } from '@hapi/joi';
 
-type Method = 'get' | 'post' | 'patch' | 'put';
-
-type Security = 'ApiKeyAuth' | 'someother';
-
-type ContentType = 'application/json' | 'text/plain';
+type Method = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'head' | 'trace' | 'connect';
 
 type ParameterContext = {
   name: string;
@@ -15,17 +13,41 @@ type ParameterContext = {
 };
 
 type RequestContext = {
-  path?: string;
-  methods?: Set<Method>;
-  tags?: string[];
-  security?: Security[];
-  produces?: ContentType[];
-  parameters?: ParameterContext;
+  path: string;
+  summary?: string;
+  description?: string;
+  methods: Set<Method>;
+  tags: Set<string>;
+  security: Set<string>;
+  produces: Set<string>;
+  parameters?: ParameterContext[];
   responses?: Set<BaggerResponse>;
 };
 
+type CompiledMethodContent = {
+  summary?: string;
+  description: string;
+  tags?: Set<string>;
+  security?: Set<string>;
+  produces?: Set<string>;
+  parameters?: ParameterContext[];
+  responses: Set<BaggerResponse>;
+};
+
+type CompiledRequest = {
+  [path: string]: {
+    [method in Method]: CompiledMethodContent;
+  };
+};
+
 export class BaggerRequest {
-  private context: RequestContext = {};
+  private context: RequestContext = {
+    path: '', // TODO: should not have default value
+    methods: new Set<Method>(),
+    tags: new Set<string>(),
+    security: new Set<string>(),
+    produces: new Set<string>()
+  };
   public readonly isBagger = true;
 
   public path(path: string): BaggerRequest {
@@ -46,29 +68,43 @@ export class BaggerRequest {
   }
 
   public tag(tag: string): BaggerRequest {
+    if (!this.context.tags) {
+      this.context.tags = new Set<string>();
+    }
+    this.context.tags.add(tag);
+    return this;
+  }
+
+  public security(scheme: string): BaggerRequest {
+    if (!this.context.security) {
+      this.context.security = new Set<string>();
+    }
+    this.context.security.add(scheme);
     return this;
   }
 
   public produces(contentType: string): BaggerRequest {
+    if (!this.context.produces) {
+      this.context.produces = new Set<string>();
+    }
+    try {
+      validateContentType(contentType);
+      this.context.produces.add(contentType);
+    } catch (err) {
+      console.error('invalid content type', err);
+    }
     return this;
   }
 
-  private validateJoi(joi: any): boolean {
-    return true;
-  }
-
-  public query(joi: any): BaggerRequest {
-    this.validateJoi(joi);
+  public query(joi: JoiObject): BaggerRequest {
     return this;
   }
 
-  public body(joi: any): BaggerRequest {
-    this.validateJoi(joi);
+  public body(joi: JoiObject): BaggerRequest {
     return this;
   }
 
-  public pathParams(joi: any): BaggerRequest {
-    this.validateJoi(joi);
+  public pathParams(joi: JoiObject): BaggerRequest {
     return this;
   }
 
@@ -78,5 +114,15 @@ export class BaggerRequest {
     }
     this.context.responses.add(response);
     return this;
+  }
+
+  public compile(): CompiledRequest {
+    const obj: any = {};
+    const ctxt: any = (obj[this.context.path] = {});
+    const v = this.context as CompiledMethodContent;
+    this.context.methods.forEach((value: Method, _: Method, _set: Set<Method>) => {
+      ctxt[value] = v;
+    });
+    return obj;
   }
 }
