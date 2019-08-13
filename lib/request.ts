@@ -1,18 +1,11 @@
 import { parse as validateContentType } from 'content-type';
 import { BaggerResponse } from './response';
 import { RequestBody, BaggerRequestBody } from './request_body';
+import { PathItemObject } from 'openapi3-ts';
 
 type Method = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'head' | 'trace' | 'connect';
 
-type ParameterContext = {
-  name: string;
-  description: string;
-  in: string;
-  required: boolean;
-  schema: any;
-};
-
-type RequestContext = {
+interface RequestContext {
   path: string;
   summary?: string;
   description?: string;
@@ -20,29 +13,31 @@ type RequestContext = {
   tags: Set<string>;
   security: Set<string>;
   produces: Set<string>;
-  parameters?: ParameterContext[];
   requestBody?: RequestBody | BaggerRequestBody;
   responses?: Set<BaggerResponse>;
-};
+}
 
-type CompiledMethodContent = {
+interface CompiledMethodContent {
   summary?: string;
-  description: string;
+  description?: string;
   tags?: Set<string>;
   security?: Set<string>;
   produces?: Set<string>;
-  requestBody?: RequestBody;
-  responses: Set<BaggerResponse>;
-};
+  requestBody?: RequestBody | BaggerRequestBody;
+  responses?: Set<BaggerResponse>;
+}
 
-type CompiledRequest = {
+interface CompiledRequest {
   [path: string]: {
     [method in Method]: CompiledMethodContent;
   };
-};
+}
 
 export class BaggerRequest {
+  /*private _path: string = '';
+  private pathContext: PathItemObject;*/
   private context: RequestContext = {
+    // TODO: Use open api types
     path: '', // TODO: should not have default value
     methods: new Set<Method>(),
     tags: new Set<string>(),
@@ -115,13 +110,14 @@ export class BaggerRequest {
   }
 
   public compile(): CompiledRequest {
-    const obj: any = {};
-    const ctxt: any = (obj[this.context.path] = {});
+    const obj: PathItemObject = {};
+    obj[this.context.path] = {};
+    /* eslint-disable */
     const v: any = this.context as CompiledMethodContent;
     this.context.methods.forEach((value: Method, _: Method, _set: Set<Method>) => {
       const newVal = Object.keys(v).reduce(
         (prev, curr) => {
-          let val: any = v[curr];
+          let val = v[curr];
           if (typeof v[curr].compile === 'function') {
             val = v[curr].compile();
           } else if (v[curr] instanceof Set) {
@@ -132,8 +128,9 @@ export class BaggerRequest {
         },
         {} as any
       );
-      ctxt[value] = newVal;
+      obj[this.context.path][value] = newVal;
     });
+    /* eslint-enable */
     return obj;
   }
 }

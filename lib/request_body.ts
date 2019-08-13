@@ -3,11 +3,11 @@ import { Schema } from '@hapi/joi';
 import { JSONSchema7 } from 'json-schema';
 import { ContentObject } from 'openapi3-ts';
 
-export type RequestBody = {
+export interface RequestBody {
   description: string;
   required: boolean;
   content?: ContentObject;
-};
+}
 
 export class BaggerRequestBody {
   private _description?: string;
