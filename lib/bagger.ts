@@ -1,12 +1,12 @@
 import { BaggerResponse } from './response';
 import { BaggerRequest } from './request';
 import { SchemaObject } from 'openapi3-ts';
-import { compile } from './compile';
+export * from './compile';
 
-const bagger = {
-  response: (httpCode: number) => new BaggerResponse(httpCode),
-  request: () => new BaggerRequest(),
-  compile
-};
+export function response(httpCode: number): BaggerResponse {
+  return new BaggerResponse(httpCode);
+}
 
-export default bagger;
+export function request(): BaggerRequest {
+  return new BaggerRequest();
+}
