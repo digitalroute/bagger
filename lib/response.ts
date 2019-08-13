@@ -2,7 +2,7 @@ import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean_object';
 import { Schema } from '@hapi/joi';
 import { Content } from './content';
-import { SchemaObject, ContentObject } from 'openapi3-ts';
+import { ContentObject } from 'openapi3-ts';
 
 interface Internals {
   httpCode: number;

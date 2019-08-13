@@ -1,6 +1,5 @@
 import { BaggerResponse } from './response';
 import { BaggerRequest } from './request';
-import { SchemaObject } from 'openapi3-ts';
 import { BaggerRequestBody } from './request_body';
 export * from './compile';
 
