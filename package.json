@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juliuscc/bagger.git"
+    "url": "git+https://github.com/digitalroute/bagger.git"
   },
   "keywords": [
     "swagger",
@@ -38,9 +38,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/juliuscc/bagger/issues"
+    "url": "https://github.com/digitalroute/bagger/issues"
   },
-  "homepage": "https://github.com/juliuscc/bagger#readme",
+  "homepage": "https://github.com/digitalroute/bagger#readme",
   "dependencies": {
     "@types/hapi__joi": "^15.0.3",
     "joi": "^14.3.1",
