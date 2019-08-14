@@ -11,11 +11,7 @@ Object {
   "paths": Object {
     "/bags": Object {
       "get": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Successfully fetched request",
-          },
-        },
+        "responses": Object {},
         "tags": Array [
           "bags",
           "users",
