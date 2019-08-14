@@ -1,18 +1,12 @@
 import { Content } from './content';
 import { Schema } from '@hapi/joi';
 import { JSONSchema7 } from 'json-schema';
-import { ContentObject } from 'openapi3-ts';
-
-export interface RequestBody {
-  description: string;
-  required: boolean;
-  content?: ContentObject;
-}
+import { RequestBodyObject } from 'openapi3-ts';
 
 export class BaggerRequestBody {
   private _description?: string;
   private _required: boolean = false;
-  private _contentType: string = 'application/json';
+  private _content: Content = new Content();
   private _schema?: Schema | JSONSchema7;
 
   public description(description: string): BaggerRequestBody {
@@ -25,24 +19,16 @@ export class BaggerRequestBody {
     return this;
   }
 
-  public contentType(contentType: string): BaggerRequestBody {
-    this._contentType = contentType;
+  public content(contentType: string, schema: Schema | JSONSchema7): BaggerRequestBody {
+    this._content.add(contentType, schema);
     return this;
   }
 
-  public schema(schema: Schema | JSONSchema7): BaggerRequestBody {
-    this._schema = schema;
-    return this;
-  }
-
-  public compile(): RequestBody {
-    if (this._schema) {
-      return {
-        description: this._description || '',
-        required: this._required,
-        content: new Content(this._contentType, this._schema).compile()
-      };
-    }
-    return { description: this._description || '', required: this._required };
+  public compile(): RequestBodyObject {
+    return {
+      description: this._description,
+      required: this._required,
+      content: this._content.compile()
+    };
   }
 }

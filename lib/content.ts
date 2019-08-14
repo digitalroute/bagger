@@ -1,3 +1,4 @@
+import { parse as validateMediaType } from 'content-type';
 import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
 import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
@@ -18,14 +19,22 @@ function isJoi(schema: any): schema is Schema {
 }
 
 export class Content {
-  private internals: InternalContent;
+  private internals: InternalContent[] = [];
 
-  public constructor(mediaType: string, schema: JSONSchema7 | Schema) {
-    if (isJoi(schema)) {
-      this.internals = { mediaType, schema: createSwaggerDefinition(schema) };
-    } else {
-      this.internals = { mediaType, schema: toOpenApi(schema) };
+  public add(mediaType: string, schema: JSONSchema7 | Schema): Content {
+    if (!validateMediaType(mediaType)) {
+      console.error(`${mediaType} is not a valid media type`);
+      return this;
     }
+    if (this.internals.some(internal => internal.mediaType === mediaType)) {
+      console.error('media type already added');
+      return this;
+    }
+    this.internals.push({
+      mediaType,
+      schema: isJoi(schema) ? createSwaggerDefinition(schema) : toOpenApi(schema)
+    });
+    return this;
   }
 
   /**
@@ -33,11 +42,12 @@ export class Content {
    * @returns A Swagger content object
    */
   public compile(): ContentObject {
-    const { mediaType, schema } = this.internals;
-    return {
-      [mediaType]: {
-        schema
-      }
-    };
+    const obj = this.internals.reduce((prev: ContentObject, curr: InternalContent): ContentObject => {
+      prev[curr.mediaType] = {
+        schema: curr.schema
+      };
+      return prev;
+    }, {});
+    return obj;
   }
 }

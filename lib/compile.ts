@@ -8,6 +8,7 @@ import {
   ComponentsObject
 } from 'openapi3-ts';
 import { BaggerRequest } from './request';
+import { cleanObject } from './utils/clean_object';
 
 interface SwaggerConfiguration {
   info: InfoObject;
@@ -16,10 +17,22 @@ interface SwaggerConfiguration {
   externalDocs?: ExternalDocumentationObject;
 }
 
-// TODO: Remove next line as this is a temporary eslint disable
-// eslint-disable-next-line
 function compileRequests(requests: BaggerRequest[]): PathsObject {
-  return {};
+  const compiledRequests = requests.map(request => request.compile());
+
+  const mergedRequests = compiledRequests.reduce((paths, request) => {
+    const requestObject = Object.entries(request)[0];
+    const [path, definition] = requestObject;
+
+    paths[path] = {
+      ...definition,
+      ...paths[path]
+    };
+
+    return paths;
+  }, {});
+
+  return mergedRequests;
 }
 
 /**
@@ -35,10 +48,10 @@ export function compile(
 ): OpenAPIObject {
   const paths = compileRequests(requests);
 
-  return {
+  return cleanObject({
     ...configuration,
     openapi: '3.0',
     paths,
     components
-  };
+  });
 }
