@@ -2,7 +2,7 @@ import { parse as validateMediaType } from 'content-type';
 import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
 import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
-import { SchemaObject, ContentObject, MediaTypeObject } from 'openapi3-ts';
+import { SchemaObject, ContentObject } from 'openapi3-ts';
 
 // There are no type definitions for json-schema-to-openapi-schema
 // eslint-disable-next-line @typescript-eslint/no-var-requires
