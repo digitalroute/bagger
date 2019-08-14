@@ -1,8 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Bagger compiler A request can be included 1`] = `
+Object {
+  "info": Object {
+    "description": "Provides resources related to building swagger definitions",
+    "title": "Bagger API",
+    "version": "v1",
+  },
+  "openapi": "3.0",
+  "paths": Object {
+    "": Object {
+      "get": Object {
+        "methods": Array [
+          "get",
+        ],
+        "path": "",
+        "produces": Array [],
+        "security": Array [],
+        "tags": Array [
+          "bags",
+          "users",
+        ],
+      },
+    },
+  },
+}
+`;
+
 exports[`Bagger compiler An empty definition should compile 1`] = `
 Object {
-  "components": undefined,
   "info": Object {
     "description": "Provides resources related to building swagger definitions",
     "title": "Bagger API",

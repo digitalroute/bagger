@@ -27,7 +27,7 @@ interface CompiledMethodContent {
   responses?: Set<BaggerResponse>;
 }
 
-interface CompiledRequest {
+export interface CompiledRequest {
   [path: string]: {
     [method in Method]: CompiledMethodContent;
   };

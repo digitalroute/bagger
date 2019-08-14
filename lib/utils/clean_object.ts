@@ -6,7 +6,7 @@ function isObject(value: any): value is { [key: string]: any } {
 
 type Entry = [string, any];
 
-export function cleanObject<T extends { [key: string]: any }>(pollutedObject: T): { [key: string]: any } {
+export function cleanObject<T extends { [key: string]: any }>(pollutedObject: T): T {
   const pollutedEntries = Object.entries(pollutedObject);
   const entries: Entry[] = pollutedEntries
     .filter(([, value]): boolean => value !== undefined)
