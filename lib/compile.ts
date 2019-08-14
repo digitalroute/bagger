@@ -9,6 +9,7 @@ import {
 } from 'openapi3-ts';
 import { BaggerRequest } from './request';
 import { cleanObject } from './utils/clean_object';
+import { validateSchema } from './utils/validate-schema';
 
 interface SwaggerConfiguration {
   info: InfoObject;
@@ -47,11 +48,18 @@ export function compile(
   components?: ComponentsObject
 ): OpenAPIObject {
   const paths = compileRequests(requests);
-
-  return cleanObject({
+  const swaggerDefinition = cleanObject({
     ...configuration,
-    openapi: '3.0',
+    openapi: '3.0.0',
     paths,
     components
   });
+
+  const errors = validateSchema(swaggerDefinition);
+
+  if (errors.length > 0) {
+    throw new Error(JSON.stringify(errors));
+  }
+
+  return swaggerDefinition;
 }

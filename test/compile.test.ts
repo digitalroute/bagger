@@ -28,6 +28,7 @@ describe('Bagger compiler', () => {
           bagger
             .request('/bags', 'get')
             .addTag('bags')
+            .addResponse(bagger.response(200).description('Successfully fetched request'))
             .addTag('users')
         ]
       )

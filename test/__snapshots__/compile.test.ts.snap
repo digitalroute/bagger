@@ -7,11 +7,15 @@ Object {
     "title": "Bagger API",
     "version": "v1",
   },
-  "openapi": "3.0",
+  "openapi": "3.0.0",
   "paths": Object {
     "/bags": Object {
       "get": Object {
-        "responses": Object {},
+        "responses": Object {
+          "200": Object {
+            "description": "Successfully fetched request",
+          },
+        },
         "tags": Array [
           "bags",
           "users",
@@ -29,7 +33,7 @@ Object {
     "title": "Bagger API",
     "version": "v1",
   },
-  "openapi": "3.0",
+  "openapi": "3.0.0",
   "paths": Object {},
 }
 `;

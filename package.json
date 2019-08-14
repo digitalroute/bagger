@@ -47,6 +47,7 @@
   "dependencies": {
     "@types/content-type": "^1.1.3",
     "@types/hapi__joi": "^15.0.3",
+    "ajv": "^6.10.2",
     "content-type": "^1.0.4",
     "joi": "^14.3.1",
     "joi-to-swagger": "^3.2.0",
