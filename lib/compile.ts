@@ -9,7 +9,7 @@ import {
 } from 'openapi3-ts';
 import { BaggerRequest } from './request';
 import { cleanObject } from './utils/clean_object';
-import { validateSchema } from './utils/validate-schema';
+import { validateSchema } from './utils/validate_schema';
 
 interface SwaggerConfiguration {
   info: InfoObject;

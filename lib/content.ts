@@ -1,5 +1,5 @@
 import { parse as validateMediaType } from 'content-type';
-import { createSwaggerDefinition } from './utils/createSwaggerDefinition';
+import { createSwaggerDefinition } from './utils/create_swagger_definition';
 import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
 import { SchemaObject, ContentObject } from 'openapi3-ts';
