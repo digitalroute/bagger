@@ -5,7 +5,6 @@ import {
   ServerObject,
   InfoObject,
   OpenAPIObject,
-  OpenApiBuilder,
   PathsObject
 } from 'openapi3-ts';
 import { cleanObject } from './utils/clean_object';
