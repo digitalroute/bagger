@@ -41,20 +41,23 @@ export class BaggerRequest {
     this.method = method;
   }
 
-  private setInContext(key: string, value: OperationTypes): void {
+  private setInContext(key: keyof OperationObject, value: OperationTypes): BaggerRequest {
     if (!this.operationContext[key]) {
       this.operationContext[key] = value;
     }
+    return this;
   }
 
   public operationId(operationId: string): BaggerRequest {
-    this.setInContext('operationId', operationId);
-    return this;
+    return this.setInContext('operationId', operationId);
   }
 
   public deprecated(deprecated: boolean): BaggerRequest {
-    this.setInContext('deprecated', deprecated);
-    return this;
+    return this.setInContext('deprecated', deprecated);
+  }
+
+  public summary(summary: string): BaggerRequest {
+    return this.setInContext('summary', summary);
   }
 
   public addTag(tag: string): BaggerRequest {
@@ -76,8 +79,7 @@ export class BaggerRequest {
   }
 
   public body(requestBody: BaggerRequestBody): BaggerRequest {
-    this.setInContext('requestBody', requestBody.compile());
-    return this;
+    return this.setInContext('requestBody', requestBody.compile());
   }
 
   public addResponse(response: BaggerResponse): BaggerRequest {
