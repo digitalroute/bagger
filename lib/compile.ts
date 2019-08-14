@@ -7,7 +7,7 @@ import {
   ExternalDocumentationObject,
   ComponentsObject
 } from 'openapi3-ts';
-import { BaggerRequest, CompiledRequest } from './request';
+import { BaggerRequest } from './request';
 import { cleanObject } from './utils/clean_object';
 
 interface SwaggerConfiguration {

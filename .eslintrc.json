@@ -9,7 +9,8 @@
         "args": "after-used",
         "ignoreRestSiblings": true
       }
-    ]
+    ],
+    "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
   },
   "env": {
     "jest/globals": true
