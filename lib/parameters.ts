@@ -1,7 +1,7 @@
 import { ParameterObject, ParameterStyle, SchemaObject, ReferenceObject, ExampleObject } from 'openapi3-ts';
 import { Content } from './content';
 
-type ExamplesObject = {
+interface ExamplesObject {
   [param: string]: ExampleObject | ReferenceObject;
 };
 
