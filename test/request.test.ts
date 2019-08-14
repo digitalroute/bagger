@@ -30,8 +30,7 @@ describe('Swagger Request', () => {
       .addParameter(
         bagger
           .parameter()
-          .query()
-          .name('a query param')
+          .query('a query param')
           .required(true)
       )
       .compile();

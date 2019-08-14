@@ -3,37 +3,15 @@ import { Content } from './content';
 
 interface ExamplesObject {
   [param: string]: ExampleObject | ReferenceObject;
-};
+}
+
+export type ParameterType = 'path' | 'query' | 'cookie' | 'header';
 
 export class BaggerParameter {
-  private settings: ParameterObject = {
-    in: 'path',
-    name: 'path'
-  };
+  private settings: ParameterObject;
 
-  public query(): BaggerParameter {
-    this.settings.in = 'query';
-    return this;
-  }
-
-  public path(): BaggerParameter {
-    this.settings.in = 'path';
-    return this;
-  }
-
-  public cookie(): BaggerParameter {
-    this.settings.in = 'cookie';
-    return this;
-  }
-
-  public header(): BaggerParameter {
-    this.settings.in = 'header';
-    return this;
-  }
-
-  public name(name: string): BaggerParameter {
-    this.settings.name = name;
-    return this;
+  public constructor(type: ParameterType, name: string) {
+    this.settings = { in: type, name };
   }
 
   public description(description: string): BaggerParameter {

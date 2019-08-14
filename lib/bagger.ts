@@ -3,7 +3,7 @@ import { BaggerRequest, Method } from './request';
 import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
 import { OpenAPIObject } from 'openapi3-ts';
-import { BaggerParameter } from './parameters';
+import { BaggerParameter, ParameterType } from './parameters';
 
 const internalConfiguration = new BaggerConfigurationInternal();
 const configuration = new BaggerConfiguration(internalConfiguration);
@@ -40,8 +40,13 @@ export function requestBody(): BaggerRequestBody {
   return new BaggerRequestBody();
 }
 
-export function parameter(): BaggerParameter {
-  return new BaggerParameter();
+export function parameter(): { [key in ParameterType]: (name: string) => BaggerParameter } {
+  return {
+    query: (name: string) => new BaggerParameter('query', name),
+    path: (name: string) => new BaggerParameter('path', name),
+    cookie: (name: string) => new BaggerParameter('cookie', name),
+    header: (name: string) => new BaggerParameter('header', name)
+  };
 }
 
 export function configure(): BaggerConfiguration {
