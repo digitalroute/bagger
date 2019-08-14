@@ -2,29 +2,16 @@ import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean_object';
 import { Schema } from '@hapi/joi';
 import { Content } from './content';
-import { ContentObject } from 'openapi3-ts';
-
-interface Internals {
-  httpCode: number;
-  description?: string;
-  content?: Content;
-}
-
-interface CompiledResponse {
-  [httpCode: string]: {
-    description?: string;
-    content?: ContentObject;
-  };
-}
+import { ResponsesObject } from 'openapi3-ts';
 
 export class BaggerResponse {
   public readonly isBagger = true;
-  public internals: Internals;
+  private _content?: Content;
+  private _description?: string;
+  private httpCode: number;
 
   public constructor(httpCode: number) {
-    this.internals = {
-      httpCode
-    };
+    this.httpCode = httpCode;
   }
 
   /**
@@ -32,7 +19,7 @@ export class BaggerResponse {
    * @param description
    */
   public description(description: string): BaggerResponse {
-    this.internals.description = description;
+    this._description = description;
     return this;
   }
 
@@ -42,7 +29,10 @@ export class BaggerResponse {
    * @param schema A schema describing the format of the returned body. It can be a JSON Schema or a joi object.
    */
   public content(mediaType: string, schema: JSONSchema7 | Schema): BaggerResponse {
-    this.internals.content = new Content(mediaType, schema);
+    if (!this._content) {
+      this._content = new Content();
+    }
+    this._content.add(mediaType, schema);
     return this;
   }
 
@@ -50,11 +40,11 @@ export class BaggerResponse {
    * Creates a compiled object representation of the response.
    * @returns A Swagger response object
    */
-  public compile(): CompiledResponse {
+  public compile(): ResponsesObject {
     const compiledPolluted = {
-      [this.internals.httpCode]: {
-        description: this.internals.description,
-        content: this.internals.content && this.internals.content.compile()
+      [this.httpCode]: {
+        description: this._description,
+        content: this._content && this._content.compile()
       }
     };
 

@@ -1,5 +1,5 @@
 import { BaggerResponse } from './response';
-import { BaggerRequest } from './request';
+import { BaggerRequest, Method } from './request';
 import { BaggerRequestBody } from './request_body';
 export * from './compile';
 
@@ -25,8 +25,8 @@ export function response(httpCode: number): BaggerResponse {
 /**
  * Creates a Request object
  */
-export function request(): BaggerRequest {
-  return new BaggerRequest();
+export function request(path: string, method: Method): BaggerRequest {
+  return new BaggerRequest(path, method);
 }
 
 export function requestBody(): BaggerRequestBody {
