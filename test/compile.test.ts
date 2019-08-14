@@ -26,10 +26,9 @@ describe('Bagger compiler', () => {
         },
         [
           bagger
-            .request()
-            .method('get')
-            .tag('bags')
-            .tag('users')
+            .request('/bags', 'get')
+            .addTag('bags')
+            .addTag('users')
         ]
       )
     ).toMatchSnapshot();

@@ -9,14 +9,9 @@ Object {
   },
   "openapi": "3.0",
   "paths": Object {
-    "": Object {
+    "/bags": Object {
       "get": Object {
-        "methods": Array [
-          "get",
-        ],
-        "path": "",
-        "produces": Array [],
-        "security": Array [],
+        "responses": Object {},
         "tags": Array [
           "bags",
           "users",
