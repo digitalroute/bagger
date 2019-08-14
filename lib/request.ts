@@ -82,9 +82,15 @@ export class BaggerRequest {
 
   public addResponse(response: BaggerResponse): BaggerRequest {
     if (!this.operationContext.responses) {
-      this.operationContext.responses = [];
+      this.operationContext.responses = {};
     }
-    this.operationContext.responses.push(response.compile());
+
+    const responseDefinition = response.compile();
+
+    this.operationContext.responses = {
+      ...responseDefinition,
+      ...this.operationContext.responses
+    };
     return this;
   }
 

@@ -7,7 +7,8 @@
     "outDir": "dist",
     "strict": true,
     "declaration": true,
-    "declarationDir": "dist/types"
+    "declarationDir": "dist/types",
+    "resolveJsonModule": true
   },
   "include": ["lib/**/*"]
 }
