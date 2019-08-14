@@ -1,5 +1,6 @@
 import { BaggerResponse } from './response';
 import { BaggerRequestBody } from './request_body';
+import { BaggerParameter } from './parameters';
 import {
   OperationObject,
   SecurityRequirementObject,
@@ -80,6 +81,14 @@ export class BaggerRequest {
 
   public body(requestBody: BaggerRequestBody): BaggerRequest {
     return this.setInContext('requestBody', requestBody.compile());
+  }
+
+  public addParameter(parameter: BaggerParameter): BaggerRequest {
+    if (!this.operationContext.parameters) {
+      this.operationContext.parameters = [];
+    }
+    this.operationContext.parameters.push(parameter.compile());
+    return this;
   }
 
   public addResponse(response: BaggerResponse): BaggerRequest {

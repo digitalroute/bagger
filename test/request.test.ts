@@ -19,5 +19,34 @@ describe('Swagger Request', () => {
     expect(path).toHaveProperty('get');
     expect(path['get']).toHaveProperty('tags');
     expect(path['get']).toHaveProperty('security');
+    expect(path['get']).toHaveProperty('requestBody');
+  });
+
+  test('Use parameters in request', () => {
+    const req = bagger
+      .request('/some-path', 'get')
+      .addTag('getters')
+      .addSecurity('oauth2')
+      .addParameter(
+        bagger
+          .parameter()
+          .query()
+          .name('a query param')
+          .required(true)
+      )
+      .compile();
+    expect(req).toHaveProperty('/some-path');
+    const path = req['/some-path'];
+    expect(path).toHaveProperty('get');
+    expect(path.get).toHaveProperty('tags');
+    expect(path.get).toHaveProperty('security');
+    expect(path.get).toHaveProperty('parameters');
+    expect(path.get.parameters).toHaveLength(1);
+    expect(path.get.parameters[0]).toHaveProperty('in');
+    expect(path.get.parameters[0].in).toEqual('query');
+    expect(path.get.parameters[0]).toHaveProperty('name');
+    expect(path.get.parameters[0].name).toEqual('a query param');
+    expect(path.get.parameters[0]).toHaveProperty('required');
+    expect(path.get.parameters[0].required).toEqual(true);
   });
 });
