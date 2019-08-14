@@ -8,6 +8,7 @@ import {
   PathsObject
 } from 'openapi3-ts';
 import { cleanObject } from './utils/clean_object';
+import { validateSchema } from './utils/validate-schema';
 
 interface SwaggerConfiguration {
   info: InfoObject;
@@ -99,10 +100,18 @@ export class BaggerConfigurationInternal {
 
   public compile(): OpenAPIObject {
     const paths = this.mergeRequests();
-    return cleanObject({
+    const swaggerDefinition = cleanObject({
       ...this.configuration,
       openapi: '3.0.0',
       paths
     });
+
+    const errors = validateSchema(swaggerDefinition);
+
+    if (errors.length > 0) {
+      throw new Error(JSON.stringify(errors));
+    }
+
+    return swaggerDefinition;
   }
 }

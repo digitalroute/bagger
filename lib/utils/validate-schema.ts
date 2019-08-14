@@ -1,4 +1,4 @@
-import * as Ajv from 'ajv';
+import Ajv from 'ajv';
 import * as openApi3Schema from './openapi-3.0.json';
 import { OpenAPIObject } from 'openapi3-ts';
 

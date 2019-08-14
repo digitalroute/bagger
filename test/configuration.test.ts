@@ -17,7 +17,8 @@ describe('Bagger compiler', () => {
     bagger
       .request('/bags', 'get')
       .addTag('bags')
-      .addTag('users');
+      .addTag('users')
+      .addResponse(bagger.response(200).description('Good fetch'));
     expect(bagger.compile()).toMatchSnapshot();
   });
 });

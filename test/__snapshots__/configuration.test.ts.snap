@@ -11,7 +11,11 @@ Object {
   "paths": Object {
     "/bags": Object {
       "get": Object {
-        "responses": Object {},
+        "responses": Object {
+          "200": Object {
+            "description": "Good fetch",
+          },
+        },
         "tags": Array [
           "bags",
           "users",
