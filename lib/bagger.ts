@@ -1,7 +1,11 @@
 import { BaggerResponse } from './response';
 import { BaggerRequest, Method } from './request';
 import { BaggerRequestBody } from './request_body';
-export * from './compile';
+import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
+import { OpenAPIObject } from 'openapi3-ts';
+
+const internalConfiguration = new BaggerConfigurationInternal();
+const configuration = new BaggerConfiguration(internalConfiguration);
 
 /**
  * Creates a Response object
@@ -26,9 +30,19 @@ export function response(httpCode: number): BaggerResponse {
  * Creates a Request object
  */
 export function request(path: string, method: Method): BaggerRequest {
-  return new BaggerRequest(path, method);
+  const req = new BaggerRequest(path, method);
+  internalConfiguration.addRequest(req);
+  return req;
 }
 
 export function requestBody(): BaggerRequestBody {
   return new BaggerRequestBody();
+}
+
+export function configure(): BaggerConfiguration {
+  return configuration;
+}
+
+export function compile(): OpenAPIObject {
+  return internalConfiguration.compile();
 }
