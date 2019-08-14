@@ -65,7 +65,7 @@ export class BaggerRequest {
     return this;
   }
 
-  public security(scheme: string, scopes: string[] = []): BaggerRequest {
+  public addSecurity(scheme: string, scopes: string[] = []): BaggerRequest {
     if (!this.operationContext.security) {
       this.operationContext.security = [];
     }
@@ -80,7 +80,7 @@ export class BaggerRequest {
     return this;
   }
 
-  public response(response: BaggerResponse): BaggerRequest {
+  public addResponse(response: BaggerResponse): BaggerRequest {
     if (!this.operationContext.responses) {
       this.operationContext.responses = [];
     }

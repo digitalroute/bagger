@@ -6,7 +6,7 @@ describe('Swagger Request', () => {
     const req = bagger
       .request('/some-path', 'get')
       .addTag('getters')
-      .security('oauth2')
+      .addSecurity('oauth2')
       .body(
         bagger
           .requestBody()
