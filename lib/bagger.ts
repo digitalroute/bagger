@@ -6,6 +6,17 @@ export * from './compile';
 /**
  * Creates a Response object
  * @param httpCode The HTTP Code that the response represents
+ * @returns A bagger response that can be used to create a compiled Swagger definition.
+ * @example
+ * ```
+ * const bagger = require('.');
+ * 
+ * const getBags = bagger
+ *   .response(200)
+ *   .description('Successfully fetched all bags')
+ *   .content('text/plain', { type: 'string' });
+ 
+ * ```
  */
 export function response(httpCode: number): BaggerResponse {
   return new BaggerResponse(httpCode);
