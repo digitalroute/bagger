@@ -6,9 +6,7 @@ Object {
     "content": Object {
       "application/json": Object {
         "schema": Object {
-          "examples": Array [
-            "foo",
-          ],
+          "example": "foo",
           "type": "string",
         },
       },

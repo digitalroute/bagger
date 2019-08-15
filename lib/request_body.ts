@@ -1,6 +1,5 @@
 import { Content } from './content';
 import { Schema } from '@hapi/joi';
-import { JSONSchema7 } from 'json-schema';
 import { RequestBodyObject } from 'openapi3-ts';
 
 export class BaggerUndefinedSchemaError extends Error {}
@@ -9,7 +8,7 @@ export class BaggerRequestBody {
   private _description?: string;
   private _required: boolean = false;
   private _content: Content = new Content();
-  private schema?: JSONSchema7 | Schema;
+  private schema?: Schema;
 
   public description(description: string): BaggerRequestBody {
     this._description = description;
@@ -21,13 +20,13 @@ export class BaggerRequestBody {
     return this;
   }
 
-  public content(contentType: string, schema: Schema | JSONSchema7): BaggerRequestBody {
+  public content(contentType: string, schema: Schema): BaggerRequestBody {
     this.schema = schema;
     this._content.add(contentType, schema);
     return this;
   }
 
-  public getSchema(): JSONSchema7 | Schema {
+  public getSchema(): Schema {
     if (!this.schema) {
       throw new BaggerUndefinedSchemaError();
     }

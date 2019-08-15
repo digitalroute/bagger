@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { cleanObject } from './utils/clean_object';
 import { Schema } from '@hapi/joi';
 import { Content } from './content';
@@ -28,7 +27,7 @@ export class BaggerResponse {
    * @param mediaType The media type of the body. Like 'application/json'
    * @param schema A schema describing the format of the returned body. It can be a JSON Schema or a joi object.
    */
-  public content(mediaType: string, schema: JSONSchema7 | Schema): BaggerResponse {
+  public content(mediaType: string, schema: Schema): BaggerResponse {
     if (!this._content) {
       this._content = new Content();
     }

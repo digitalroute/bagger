@@ -6,7 +6,6 @@ import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
 import { BaggerSchemaComponent } from './component';
 import { schemaStorage } from './schema_storage';
-import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
 
 const internalConfiguration = new BaggerConfigurationInternal();
@@ -80,6 +79,6 @@ export function compile(): OpenAPIObject {
   return internalConfiguration.compile();
 }
 
-export function getRequestSchema(path: string, method: string): JSONSchema7 | Schema {
+export function getRequestSchema(path: string, method: string): Schema {
   return schemaStorage.getRequestSchema(path, method);
 }
