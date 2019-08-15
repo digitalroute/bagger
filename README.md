@@ -5,7 +5,7 @@
 [![CircleCI](https://img.shields.io/circleci/build/github/digitalroute/bagger/master?style=flat-square)](https://circleci.com/gh/digitalroute/workflows/bagger)
 [![license](https://img.shields.io/github/license/digitalroute/bagger.svg?style=flat-square)](https://github.com/digitalroute/bagger/blob/master/LICENSE)
 
-A joi-compatible tool for building swagger definitions. It enables developers use the same joi schemas for validation and documentation, ensuring that API documentation never becomes stale.
+A joi-compatible tool for building swagger (Open API 3) definitions. It enables developers to use the same joi schemas for validation and documentation, ensuring that API documentation never becomes stale.
 
 ## Features
 
@@ -56,3 +56,30 @@ const swaggerDefinition = bagger.compile();
 Install bagger using `npm`:
 
 `npm install bagger`
+
+## Documentation
+
+- Introduction
+  - Getting started
+  - Working with multiple files
+- Adding requests
+- Creating resources
+  - Response
+  - Content
+  - Request body
+- Validating with joi
+  - Adding parameters
+  - TODO: Adding body validation?
+  - Getting validation schemas
+- Components
+  - Declaring components
+  - Referancing components
+- API Referance
+  - `bagger.configure()`
+  - `bagger.compile()`
+  - `bagger.addRequest(path, method)`
+  - `bagger.addComponent()`
+  - `bagger.response(httpCode)`
+  - `bagger.requestBody()`
+  - `bagger.parameter()`
+  - `bagger.getRequestSchema()`
