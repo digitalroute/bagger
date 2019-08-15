@@ -59,22 +59,22 @@ Install bagger using `npm`:
 
 ## Documentation
 
-- Introduction
-  - Getting started
-  - Working with multiple files
-- Adding requests
-- Creating resources
+- [Introduction](/docs/01-introduction.md)
+  - [Getting started](/docs/01-introduction.md#getting-started)
+  - [Working with multiple files](/docs/01-introduction.md#working-with-multiple-files)
+- [Adding requests](/docs/02-requests.md)
+- [Creating resources](/docs/03-resources.md)
   - Response
   - Content
   - Request body
-- Validating with joi
+- [Validating with joi](/docs/04-validation.md)
   - Adding parameters
   - TODO: Adding body validation?
   - Getting validation schemas
-- Components
+- [Components](/docs/05-components.md)
   - Declaring components
   - Referancing components
-- API Referance
+- [API Reference](/docs/06-api_reference.md)
   - `bagger.configure()`
   - `bagger.compile()`
   - `bagger.addRequest(path, method)`
