@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Using components Schema components Components are added to the bagger configuration 1`] = `
+Object {
+  "components": Object {
+    "schemas": Object {
+      "Person": Object {
+        "properties": Object {
+          "age": Object {
+            "format": "float",
+            "type": "number",
+          },
+          "name": Object {
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "name",
+        ],
+        "type": "object",
+      },
+    },
+  },
+  "info": Object {
+    "title": "",
+    "version": "",
+  },
+  "openapi": "3.0.0",
+  "paths": Object {},
+}
+`;
+
+exports[`Using components Schema components Creating and compiling a schema component 1`] = `
+Object {
+  "name": "Person",
+  "schema": Object {
+    "properties": Object {
+      "age": Object {
+        "format": "float",
+        "type": "number",
+      },
+      "name": Object {
+        "type": "string",
+      },
+    },
+    "required": Array [
+      "name",
+    ],
+    "type": "object",
+  },
+}
+`;

@@ -4,6 +4,7 @@ import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
 import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
+import { BaggerSchemaComponent } from './component';
 import { schemaStorage } from './schema_storage';
 import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
@@ -32,11 +33,35 @@ export function response(httpCode: number): BaggerResponse {
 
 /**
  * Creates a Request object
+ * @param path The url/path to the request
+ * @param method HTTP method like 'GET' or 'PUT'
  */
 export function addRequest(path: string, method: Method): BaggerRequest {
-  const req = new BaggerRequest(path, method);
-  internalConfiguration.addRequest(req);
-  return req;
+  const request = new BaggerRequest(path, method);
+  internalConfiguration.addRequest(request);
+  return request;
+}
+
+// export function addComponent(): { [key in ComponentType]: (name: string, schema: Schema) => BaggerComponent } {
+
+// }
+
+// export function addComponent(id: string, schema: Schema): BaggerComponent {
+//   const component = new BaggerComponent(id, schema);
+//   internalConfiguration.addComponent(component);
+//   return component;
+// }
+
+const addSchemaComponent = (name: string, schema: Schema): BaggerSchemaComponent => {
+  const component = new BaggerSchemaComponent(name, schema);
+  internalConfiguration.addSchemaComponent(component);
+  return component;
+};
+
+export function addComponent(): { schema: (name: string, schema: Schema) => BaggerSchemaComponent } {
+  return {
+    schema: addSchemaComponent
+  };
 }
 
 export function requestBody(): BaggerRequestBody {
