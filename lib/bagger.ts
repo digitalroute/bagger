@@ -43,16 +43,34 @@ export function addRequest(path: string, method: Method): BaggerRequest {
 }
 
 /**
- * Add a reusable component that can be referanced to.
+ * Add a reusable component that can be referenced to.
  */
 export function addComponent(): BaggerComponentAdder {
   return componentAdder;
 }
 
+/**
+ * Create a request body that can be used to describe the body of a request.
+ * @example
+ * ```
+ * bagger.addRequest('/bags', 'post').body(
+ *   bagger.requestBody().content(
+ *     'application/json',
+ *     joi.object.keys({
+ *       name: joi.string().required(),
+ *       hasSwag: joi.boolean().optional()
+ *     })
+ *   )
+ * );
+ * ```
+ */
 export function requestBody(): BaggerRequestBody {
   return new BaggerRequestBody();
 }
 
+/**
+ * Create a parameter
+ */
 export function parameter(): { [key in ParameterType]: (name: string) => BaggerParameter } {
   return {
     query: (name: string) => new BaggerParameter('query', name),
@@ -62,14 +80,26 @@ export function parameter(): { [key in ParameterType]: (name: string) => BaggerP
   };
 }
 
+/**
+ * Get a referance to the global bagger configuration.
+ */
 export function configure(): BaggerConfiguration {
   return configuration;
 }
 
+/**
+ * Create a swagger definition that can be used to serve a swagger web page.
+ */
 export function compile(): OpenAPIObject {
   return internalConfiguration.compile();
 }
 
+/**
+ * Get the validation object for a specific path and method. The result can be used for validation.
+ * This comes from `bagger.parameter()` and `bagger.requestBody()`, and they have to be declared on the request before getting them.
+ * @param path The url/path to the request
+ * @param method HTTP method like 'GET' or 'PUT'
+ */
 export function getRequestSchema(path: string, method: string): Schema {
   return schemaStorage.getRequestSchema(path, method);
 }
