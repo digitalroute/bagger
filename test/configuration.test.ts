@@ -32,7 +32,7 @@ describe('Bagger compiler', () => {
         .required()
     });
     bagger
-      .request('/bags', 'post')
+      .addRequest('/bags', 'post')
       .addTag('bags')
       .body(bagger.requestBody().content('application/json', schema))
       .addResponse(bagger.response(200).description('Bought a bag!'));
