@@ -116,7 +116,7 @@ const express = require('express');
 const bagger = require('@digitalroute/bagger');
 const swaggerUi = require('swagger-ui-express');
 const joi = require('@hapi/joi');
-require('./accounts'); // <-- new row
+require('./accounts'); // <-- new line
 
 // ...
 ```
