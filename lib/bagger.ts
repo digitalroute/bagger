@@ -17,7 +17,7 @@ const componentAdder = new BaggerComponentAdder(internalConfiguration);
  * @param httpCode The HTTP Code that the response represents
  * @returns A bagger response that can be used to create a compiled Swagger definition.
  * @example
- * ```
+ * ```js
  * const bagger = require('.');
  * 
  * const getBags = bagger
@@ -52,7 +52,7 @@ export function addComponent(): BaggerComponentAdder {
 /**
  * Create a request body that can be used to describe the body of a request.
  * @example
- * ```
+ * ```js
  * bagger.addRequest('/bags', 'post').body(
  *   bagger.requestBody().content(
  *     'application/json',
