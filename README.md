@@ -13,10 +13,6 @@ A joi-compatible tool for building swagger (Open API 3) definitions. It enables 
 - ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation.
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
 
-## Table of Contents
-
-WIP
-
 ## Example
 
 ```js
@@ -51,30 +47,24 @@ bagger
 const swaggerDefinition = bagger.compile();
 ```
 
-## Installation
-
-Install bagger using `npm`:
-
-`npm install bagger`
-
 ## Documentation
 
 - [Introduction](/docs/01-introduction.md)
   - [Getting started](/docs/01-introduction.md#getting-started)
   - [Working with multiple files](/docs/01-introduction.md#working-with-multiple-files)
-- [Adding requests](/docs/02-requests.md)
-- [Creating resources](/docs/03-resources.md)
+- [Adding requests](/docs/02-requests.md) 🚧 Under construction 🚧
+- [Creating resources](/docs/03-resources.md) 🚧 Under construction 🚧
   - Response
   - Content
   - Request body
-- [Validating with joi](/docs/04-validation.md)
+- [Validating with joi](/docs/04-validation.md) 🚧 Under construction 🚧
   - Adding parameters
   - TODO: Adding body validation?
   - Getting validation schemas
-- [Components](/docs/05-components.md)
+- [Components](/docs/05-components.md) 🚧 Under construction 🚧
   - Declaring components
   - Referancing components
-- [API Reference](/docs/06-api_reference.md)
+- [API Reference](/docs/06-api_reference.md) 🚧 Under construction 🚧
   - `bagger.configure()`
   - `bagger.compile()`
   - `bagger.addRequest(path, method)`
