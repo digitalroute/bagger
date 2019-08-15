@@ -23,7 +23,7 @@
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
     "generate-docs": "rimraf docs && typedoc --out docs --target es6 --mode file lib && touch ./docs/.nojekyll",
     "gh-pages": "gh-pages -d docs --dotfiles --user \"CircleCI <circleci@digitalroute.com>\"",
-    "prettier": "prettier --write \"*.{js,json,md,yml}\""
+    "prettier": "prettier --write \"**/*.{js,ts,json,md,yml}\""
   },
   "repository": {
     "type": "git",
