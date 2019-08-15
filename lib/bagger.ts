@@ -4,12 +4,13 @@ import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
 import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
-import { BaggerSchemaComponent } from './component';
+import { BaggerComponentAdder } from './component';
 import { schemaStorage } from './schema_storage';
 import { Schema } from '@hapi/joi';
 
 const internalConfiguration = new BaggerConfigurationInternal();
 const configuration = new BaggerConfiguration(internalConfiguration);
+const componentAdder = new BaggerComponentAdder(internalConfiguration);
 
 /**
  * Creates a Response object
@@ -42,20 +43,10 @@ export function addRequest(path: string, method: Method): BaggerRequest {
 }
 
 /**
- * Add a reusable data model (schema).
- * @param name A unique id that is used to referance the component.
- * @param schema A `@hapi/joi` schema that describes the data model.
+ * Add a reusable component that can be referanced to.
  */
-const addSchemaComponent = (name: string, schema: Schema): BaggerSchemaComponent => {
-  const component = new BaggerSchemaComponent(name, schema);
-  internalConfiguration.addSchemaComponent(component);
-  return component;
-};
-
-export function addComponent(): { schema: (name: string, schema: Schema) => BaggerSchemaComponent } {
-  return {
-    schema: addSchemaComponent
-  };
+export function addComponent(): BaggerComponentAdder {
+  return componentAdder;
 }
 
 export function requestBody(): BaggerRequestBody {
