@@ -26,6 +26,64 @@ Object {
 }
 `;
 
+exports[`Bagger compiler Add a request and get the schema 1`] = `
+Object {
+  "info": Object {
+    "description": "Provides resources related to building swagger definitions",
+    "title": "Bagger API",
+    "version": "v1",
+  },
+  "openapi": "3.0.0",
+  "paths": Object {
+    "/bags": Object {
+      "get": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Good fetch",
+          },
+        },
+        "tags": Array [
+          "bags",
+          "users",
+        ],
+      },
+      "post": Object {
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "properties": Object {
+                  "bagType": Object {
+                    "enum": Array [
+                      "backpack",
+                      "sportsbag",
+                    ],
+                    "type": "string",
+                  },
+                },
+                "required": Array [
+                  "bagType",
+                ],
+                "type": "object",
+              },
+            },
+          },
+          "required": false,
+        },
+        "responses": Object {
+          "200": Object {
+            "description": "Bought a bag!",
+          },
+        },
+        "tags": Array [
+          "bags",
+        ],
+      },
+    },
+  },
+}
+`;
+
 exports[`Bagger compiler An empty definition should compile 1`] = `
 Object {
   "info": Object {

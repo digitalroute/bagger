@@ -2,15 +2,19 @@ import { parse as validateMediaType } from 'content-type';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
 import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
-import { SchemaObject, ContentObject } from 'openapi3-ts';
+import { ContentObject } from 'openapi3-ts';
 
 // There are no type definitions for json-schema-to-openapi-schema
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const toOpenApi = require('json-schema-to-openapi-schema');
 
+export class BaggerInvalidMediaTypeError extends Error {}
+
+export class BaggerDuplicateMediaTypeError extends Error {}
+
 interface InternalContent {
   mediaType: string;
-  schema: SchemaObject;
+  schema: JSONSchema7 | Schema;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,16 +27,14 @@ export class Content {
 
   public add(mediaType: string, schema: JSONSchema7 | Schema): Content {
     if (!validateMediaType(mediaType)) {
-      console.error(`${mediaType} is not a valid media type`);
-      return this;
+      throw new BaggerInvalidMediaTypeError();
     }
     if (this.internals.some(internal => internal.mediaType === mediaType)) {
-      console.error('media type already added');
-      return this;
+      throw new BaggerDuplicateMediaTypeError();
     }
     this.internals.push({
       mediaType,
-      schema: isJoi(schema) ? createSwaggerDefinition(schema) : toOpenApi(schema)
+      schema
     });
     return this;
   }
@@ -44,7 +46,7 @@ export class Content {
   public compile(): ContentObject {
     const obj = this.internals.reduce((prev: ContentObject, curr: InternalContent): ContentObject => {
       prev[curr.mediaType] = {
-        schema: curr.schema
+        schema: isJoi(curr.schema) ? createSwaggerDefinition(curr.schema) : toOpenApi(curr.schema)
       };
       return prev;
     }, {});

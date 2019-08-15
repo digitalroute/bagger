@@ -15,6 +15,7 @@
     "commit": "git-cz",
     "eslint": "eslint -c .eslintrc.json 'lib/**/*.ts' 'test/**/*.ts'",
     "test": "jest --coverage",
+    "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "test:prod": "npm run test -- --no-cache",
     "semantic-release": "semantic-release",

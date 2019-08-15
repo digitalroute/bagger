@@ -1,6 +1,7 @@
 import { BaggerResponse } from './response';
 import { BaggerRequestBody } from './request_body';
 import { BaggerParameter } from './parameters';
+import { schemaStorage } from './schema_storage';
 import {
   OperationObject,
   SecurityRequirementObject,
@@ -80,6 +81,7 @@ export class BaggerRequest {
   }
 
   public body(requestBody: BaggerRequestBody): BaggerRequest {
+    schemaStorage.addRequestSchema(this.path, this.method, requestBody.getSchema());
     return this.setInContext('requestBody', requestBody.compile());
   }
 
