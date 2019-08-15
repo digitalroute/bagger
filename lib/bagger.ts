@@ -30,7 +30,7 @@ export function response(httpCode: number): BaggerResponse {
 /**
  * Creates a Request object
  */
-export function request(path: string, method: Method): BaggerRequest {
+export function addRequest(path: string, method: Method): BaggerRequest {
   const req = new BaggerRequest(path, method);
   internalConfiguration.addRequest(req);
   return req;

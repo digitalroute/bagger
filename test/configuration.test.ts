@@ -15,7 +15,7 @@ describe('Bagger compiler', () => {
   test('A request can be included', () => {
     bagger.configure().info(defaultInfo);
     bagger
-      .request('/bags', 'get')
+      .addRequest('/bags', 'get')
       .addTag('bags')
       .addTag('users')
       .addResponse(bagger.response(200).description('Good fetch'));

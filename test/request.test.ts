@@ -4,7 +4,7 @@ import * as joi from '@hapi/joi';
 describe('Swagger Request', () => {
   test('Set a full request object', () => {
     const req = bagger
-      .request('/some-path', 'get')
+      .addRequest('/some-path', 'get')
       .addTag('getters')
       .addSecurity('oauth2')
       .body(
@@ -24,7 +24,7 @@ describe('Swagger Request', () => {
 
   test('Use parameters in request', () => {
     const req = bagger
-      .request('/some-path', 'get')
+      .addRequest('/some-path', 'get')
       .addTag('getters')
       .addSecurity('oauth2')
       .addParameter(
