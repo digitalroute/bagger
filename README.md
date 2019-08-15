@@ -23,8 +23,14 @@ WIP
 const bagger = require('bagger');
 const joi = require('@hapi/joi');
 
-const getBags = bagger
-  .request()
+bagger.configure({
+  title: 'Bagger API',
+  version: 'v1',
+  description: 'Provides resources for building swagger definitions'
+});
+
+bagger
+  .addRequest()
   .method('get')
   .path('/bags')
   .tag('bags')
@@ -42,13 +48,7 @@ const getBags = bagger
       )
   ]);
 
-const swaggerConfig = {
-  title: 'Bagger API',
-  version: 'v1',
-  description: 'Provides resources for building swagger definitions'
-};
-
-const swaggerDefinition = bagger.compile(swaggerConfig, [getBags]);
+const swaggerDefinition = bagger.compile();
 ```
 
 ## Installation
