@@ -42,16 +42,11 @@ export function addRequest(path: string, method: Method): BaggerRequest {
   return request;
 }
 
-// export function addComponent(): { [key in ComponentType]: (name: string, schema: Schema) => BaggerComponent } {
-
-// }
-
-// export function addComponent(id: string, schema: Schema): BaggerComponent {
-//   const component = new BaggerComponent(id, schema);
-//   internalConfiguration.addComponent(component);
-//   return component;
-// }
-
+/**
+ * Add a reusable data model (schema).
+ * @param name A unique id that is used to referance the component.
+ * @param schema A `@hapi/joi` schema that describes the data model.
+ */
 const addSchemaComponent = (name: string, schema: Schema): BaggerSchemaComponent => {
   const component = new BaggerSchemaComponent(name, schema);
   internalConfiguration.addSchemaComponent(component);
