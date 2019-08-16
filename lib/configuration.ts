@@ -24,21 +24,37 @@ export class BaggerConfiguration {
     this.internalConfiguration = internalConfiguration;
   }
 
+  /**
+   * Create the information object in an OpenAPI schema.
+   * @param info Defines the information object in an OpenAPI schema
+   */
   public info(info: InfoObject): BaggerConfiguration {
     this.internalConfiguration.setInfo(info);
     return this;
   }
 
+  /**
+   * Add a server to the configuration.
+   * @param server The server object
+   */
   public addServer(server: ServerObject): BaggerConfiguration {
     this.internalConfiguration.addServer(server);
     return this;
   }
 
+  /**
+   * Add an authentication component to the OpenAPI schema.
+   * @param security The authentication object.
+   */
   public addSecurity(security: SecurityRequirementObject): BaggerConfiguration {
     this.internalConfiguration.addSecurity(security);
     return this;
   }
 
+  /**
+   * Define external documentation for the OpenAPI schema.
+   * @param externalDocs The external documentation object. Containing an URL.
+   */
   public externalDocs(externalDocs: ExternalDocumentationObject): BaggerConfiguration {
     this.internalConfiguration.setExternalDocs(externalDocs);
     return this;
