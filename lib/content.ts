@@ -7,9 +7,15 @@ export class BaggerInvalidMediaTypeError extends Error {}
 
 export class BaggerDuplicateMediaTypeError extends Error {}
 
+export class BaggerSchemaNotSetForMediaType extends Error {}
+
 interface InternalContent {
   mediaType: string;
   schema: Schema;
+}
+
+export interface ContentSchemas {
+  [key: string]: Schema;
 }
 
 export class Content {
@@ -27,6 +33,13 @@ export class Content {
       schema
     });
     return this;
+  }
+
+  public getSchemas(): ContentSchemas {
+    return this.internals.reduce((prev: ContentSchemas, curr: InternalContent): ContentSchemas => {
+      prev[curr.mediaType] = curr.schema;
+      return prev;
+    }, {});
   }
 
   /**

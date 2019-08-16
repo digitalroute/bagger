@@ -81,7 +81,7 @@ export class BaggerRequest {
   }
 
   public body(requestBody: BaggerRequestBody): BaggerRequest {
-    schemaStorage.addRequestSchema(this.path, this.method, requestBody.getSchema());
+    schemaStorage.addRequestSchemas(this.path, this.method, requestBody.getSchemas(), 'body');
     return this.setInContext('requestBody', requestBody.compile());
   }
 
@@ -89,6 +89,7 @@ export class BaggerRequest {
     if (!this.operationContext.parameters) {
       this.operationContext.parameters = [];
     }
+    schemaStorage.addRequestSchemas(this.path, this.method, parameter.getSchemas(), parameter.getType());
     this.operationContext.parameters.push(parameter.compile());
     return this;
   }

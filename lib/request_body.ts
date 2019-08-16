@@ -1,4 +1,4 @@
-import { Content } from './content';
+import { Content, ContentSchemas } from './content';
 import { Schema } from '@hapi/joi';
 import { RequestBodyObject } from 'openapi3-ts';
 
@@ -8,7 +8,6 @@ export class BaggerRequestBody {
   private _description?: string;
   private _required: boolean = false;
   private _content: Content = new Content();
-  private schema?: Schema;
 
   /**
    * Set the description of the request body. It can be markdown-formatted.
@@ -34,7 +33,6 @@ export class BaggerRequestBody {
    * @param schema A `hapi/joi` schema describing the content of the body. This can also be used for validating requests in run time by using `.getSchema()`.
    */
   public content(contentType: string, schema: Schema): BaggerRequestBody {
-    this.schema = schema;
     this._content.add(contentType, schema);
     return this;
   }
@@ -42,11 +40,8 @@ export class BaggerRequestBody {
   /**
    * Get the `hapi/joi` schema that is used to describe the body content. It can be used for validating requests in runtime.
    */
-  public getSchema(): Schema {
-    if (!this.schema) {
-      throw new BaggerUndefinedSchemaError();
-    }
-    return this.schema;
+  public getSchemas(): ContentSchemas {
+    return this._content.getSchemas();
   }
 
   /**
