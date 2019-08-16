@@ -42,8 +42,8 @@ export class BaggerParameter {
   }
 
   /**
-   * Use deprecated: `true` to mark a parameter as deprecated
-   * @param deprecated if the parameter is deprecated.
+   * Marks a parameer as deprecated if set to `true`
+   * @param deprecated
    */
   public deprecated(deprecated: boolean): BaggerParameter {
     this.settings.deprecated = deprecated;
