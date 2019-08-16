@@ -33,8 +33,32 @@ export function response(httpCode: number): BaggerResponse {
 
 /**
  * Creates a Request object
- * @param path The url/path to the request
- * @param method HTTP method like 'GET' or 'PUT'
+ * @param path Path representing the request
+ * @param method HTTP method for this path. Multiple methods can be added for a path by calling
+ * addRequest for the same path multiple times.
+ * @example
+ * ```
+ * const bagger = require('.');
+ * const joi = require('@hapi/joi');
+ *
+ * bagger
+ *   .addRequest('/bags', 'get')
+ *   .addTag('bags')
+ *   .addTag('getters')
+ *   .addSecurity('OAuth2')
+ *   .addParameter(
+ *     bagger
+ *       .parameter()
+ *       .query('bagSize')
+ *       .schema(joi.string().valid(['10L', '20L', '30L'])
+ *       .required(true)
+ *   )
+ *   .addResponse(
+ *     bagger
+ *       .response(204)
+ *       .description('Fetched bag of given size')
+ *   );
+ * ```
  */
 export function addRequest(path: string, method: Method): BaggerRequest {
   const request = new BaggerRequest(path, method);
@@ -50,18 +74,28 @@ export function addComponent(): BaggerComponentAdder {
 }
 
 /**
- * Create a request body that can be used to describe the body of a request.
+ * Create a request body used for defining a body in a bagger request
  * @example
- * ```js
- * bagger.addRequest('/bags', 'post').body(
- *   bagger.requestBody().content(
- *     'application/json',
- *     joi.object.keys({
- *       name: joi.string().required(),
- *       hasSwag: joi.boolean().optional()
+ * ```
+ * const bagger = require('.');
+ * const joi = require('@hapi/joi');
+ *
+ * const body = bagger
+ *   .requestBody()
+ *   .description('Create a bag')
+ *   .content('application/json',
+ *     joi.object().keys({
+ *       type: joi.string().valid(['backpack', 'duffel', 'sports']).required(),
+ *       size: joi.array().items(joi.string().valid(['10L', '20L', '30L']).required()).required(),
+ *       description: joi.string().optional()
  *     })
  *   )
- * );
+ *   .required(true);
+ *
+ * bagger
+ *   .addRequest('/bags', 'post')
+ *   .body(body)
+ * ...
  * ```
  */
 export function requestBody(): BaggerRequestBody {
@@ -69,7 +103,23 @@ export function requestBody(): BaggerRequestBody {
 }
 
 /**
- * Create a parameter
+ * Create a parameter used for defining query, path, cookie or header parameter in bagger requests.
+ * @example
+ * ```
+ * const bagger = require('bagger');
+ * const parameter = bagger
+ *   .parameter()
+ *   .path('bagId')
+ *   .schema(joi.string().required())
+ *   .description('ID of one bag')
+ *   .explode(true)
+ *   .required(true);
+ *
+ * bagger
+ *   .addRequest('/bags/{bagId}', 'get')
+ *   .addParameter(parameter)
+ * ...
+ * ```
  */
 export function parameter(): { [key in ParameterType]: (name: string) => BaggerParameter } {
   return {
@@ -81,14 +131,32 @@ export function parameter(): { [key in ParameterType]: (name: string) => BaggerP
 }
 
 /**
- * Get a referance to the global bagger configuration.
+ * Get the configuration object for bagger. This defines the configuration for all endpoints.
+ * @example
+ * ```
+ * const bagger = require('bagger');
+ * bagger
+ *   .configure()
+ *   .info({
+ *     title: 'Bagger API',
+ *     version: 'v1',
+ *     description: 'Provides resources to building swagger definitions'
+ *   })
+ *   .addServer({
+ *     url: 'https://localhost:3000',
+ *     description: 'Local development'
+ *   })
+ * ...
+ * ```
  */
 export function configure(): BaggerConfiguration {
   return configuration;
 }
 
 /**
- * Create a swagger definition that can be used to serve a swagger web page.
+ * Compiles bagger into an OpenAPI schema. This has to be done _after_ all requests has been added to
+ * bagger.
+ * @returns An OpenAPI schema that can be used to render a UI.
  */
 export function compile(): OpenAPIObject {
   return internalConfiguration.compile();
@@ -99,8 +167,13 @@ export function compile(): OpenAPIObject {
  * This comes from `bagger.parameter()` and `bagger.requestBody()`, and they have to be declared on the request before getting them.
  * @param path The url/path to the request
  * @param method HTTP method like 'GET' or 'PUT'
+ * @param contentType
  */
-export function getRequestSchema(path: string, method: string, contentType?: string): JoiValidationSchema {
+export function getRequestSchema(
+  path: string,
+  method: string,
+  contentType: string = 'application/json'
+): JoiValidationSchema {
   const schema = schemaStorage.getRequestSchema(path, method, contentType);
   return swaggerToJoiValidation(schema);
 }
