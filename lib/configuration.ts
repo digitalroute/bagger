@@ -5,10 +5,12 @@ import {
   ServerObject,
   InfoObject,
   OpenAPIObject,
-  PathsObject
+  PathsObject,
+  ComponentsObject
 } from 'openapi3-ts';
 import { cleanObject } from './utils/clean_object';
 import { validateSchema } from './utils/validate_schema';
+import { BaggerSchemaComponent, SchemaComponentObject } from './component';
 
 interface SwaggerConfiguration {
   info: InfoObject;
@@ -61,8 +63,15 @@ export class BaggerConfiguration {
   }
 }
 
+interface BaggerComponents {
+  schemas: BaggerSchemaComponent[];
+}
+
 export class BaggerConfigurationInternal {
   private requests: BaggerRequest[] = [];
+  private components: BaggerComponents = {
+    schemas: []
+  };
   private configuration: SwaggerConfiguration = {
     info: {
       title: '',
@@ -72,6 +81,10 @@ export class BaggerConfigurationInternal {
 
   public addRequest(request: BaggerRequest): void {
     this.requests.push(request);
+  }
+
+  public addSchemaComponent(component: BaggerSchemaComponent): void {
+    this.components.schemas.push(component);
   }
 
   public setInfo(info: InfoObject): void {
@@ -114,12 +127,31 @@ export class BaggerConfigurationInternal {
     return mergedRequests;
   }
 
+  public compileSchemaComponents(): SchemaComponentObject {
+    const unmergedComponents = this.components.schemas.map(component => component.compile());
+    return unmergedComponents.reduce((schemas: SchemaComponentObject, component) => {
+      schemas[component.name] = component.schema;
+      return schemas;
+    }, {});
+  }
+
+  private compileComponents(): ComponentsObject {
+    const schemas = this.compileSchemaComponents();
+    return {
+      schemas
+    };
+  }
+
   public compile(): OpenAPIObject {
     const paths = this.mergeRequests();
+
+    const components = this.compileComponents();
+
     const swaggerDefinition = cleanObject({
       ...this.configuration,
       openapi: '3.0.0',
-      paths
+      paths,
+      components
     });
 
     const errors = validateSchema(swaggerDefinition);

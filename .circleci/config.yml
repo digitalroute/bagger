@@ -31,17 +31,8 @@ jobs:
           name: Build
           command: npm run build
       - run:
-          name: Build docs
-          command: npm run generate-docs
-      - run:
           name: Semantic Release
           command: npm run semantic-release
-      - add_ssh_keys:
-          fingerprints:
-            - '1a:33:f0:44:2d:d5:e4:ca:74:2b:89:1c:eb:6e:0c:31'
-      - run:
-          name: Deploy docs
-          command: npm run gh-pages
 
 workflows:
   version: 2

@@ -4,9 +4,7 @@ exports[`Content objects Simple content object can be created and compiled 1`] =
 Object {
   "application/json": Object {
     "schema": Object {
-      "examples": Array [
-        "foo",
-      ],
+      "example": "foo",
       "type": "string",
     },
   },

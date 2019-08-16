@@ -3,10 +3,6 @@ import { createSwaggerDefinition } from './utils/create_swagger_definition';
 import { Schema } from '@hapi/joi';
 import { ContentObject } from 'openapi3-ts';
 
-// There are no type definitions for json-schema-to-openapi-schema
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const toOpenApi = require('json-schema-to-openapi-schema');
-
 export class BaggerInvalidMediaTypeError extends Error {}
 
 export class BaggerDuplicateMediaTypeError extends Error {}
@@ -59,7 +55,7 @@ export class Content {
   public compile(): ContentObject {
     const obj = this.internals.reduce((prev: ContentObject, curr: InternalContent): ContentObject => {
       prev[curr.mediaType] = {
-        schema: isJoi(curr.schema) ? createSwaggerDefinition(curr.schema) : toOpenApi(curr.schema)
+        schema: createSwaggerDefinition(curr.schema)
       };
       return prev;
     }, {});

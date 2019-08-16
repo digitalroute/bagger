@@ -4,18 +4,20 @@ import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
 import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
+import { BaggerComponentAdder } from './component';
 import { schemaStorage } from './schema_storage';
 import { JoiValidationSchema, swaggerToJoiValidation } from './utils/swagger_to_joi_validation';
 
 const internalConfiguration = new BaggerConfigurationInternal();
 const configuration = new BaggerConfiguration(internalConfiguration);
+const componentAdder = new BaggerComponentAdder(internalConfiguration);
 
 /**
  * Creates a Response object
  * @param httpCode The HTTP Code that the response represents
  * @returns A bagger response that can be used to create a compiled Swagger definition.
  * @example
- * ```
+ * ```js
  * const bagger = require('.');
  * 
  * const getBags = bagger
@@ -59,9 +61,16 @@ export function response(httpCode: number): BaggerResponse {
  * ```
  */
 export function addRequest(path: string, method: Method): BaggerRequest {
-  const req = new BaggerRequest(path, method);
-  internalConfiguration.addRequest(req);
-  return req;
+  const request = new BaggerRequest(path, method);
+  internalConfiguration.addRequest(request);
+  return request;
+}
+
+/**
+ * Add a reusable component that can be referenced to.
+ */
+export function addComponent(): BaggerComponentAdder {
+  return componentAdder;
 }
 
 /**

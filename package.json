@@ -1,6 +1,6 @@
 {
   "name": "@digitalroute/bagger",
-  "version": "0.0.1",
+  "version": "0.0.0-semantically-released",
   "description": "🎒 A joi-compatible tool for building swagger definitions",
   "main": "dist/bagger.umd.js",
   "module": "dist/bagger.es5.js",
@@ -21,9 +21,7 @@
     "semantic-release": "semantic-release",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
-    "generate-docs": "rimraf docs && typedoc --out docs --target es6 --mode file lib && touch ./docs/.nojekyll",
-    "gh-pages": "gh-pages -d docs --dotfiles --user \"CircleCI <circleci@digitalroute.com>\"",
-    "prettier": "prettier --write \"*.{js,json,md,yml}\""
+    "prettier": "prettier --write \"**/*.{js,ts,json,md,yml}\""
   },
   "repository": {
     "type": "git",
@@ -44,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/digitalroute/bagger/issues"
   },
-  "homepage": "https://digitalroute.github.io/bagger/",
+  "homepage": "https://github.com/digitalroute/bagger",
   "dependencies": {
     "@types/content-type": "^1.1.3",
     "@types/hapi__joi": "^15.0.3",
@@ -117,6 +115,35 @@
     }
   },
   "release": {
-    "branch": "master"
+    "branch": "master",
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "feat",
+              "release": "minor"
+            },
+            {
+              "type": "fix",
+              "release": "patch"
+            },
+            {
+              "type": "perf",
+              "release": "patch"
+            },
+            {
+              "type": "docs",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
   }
 }

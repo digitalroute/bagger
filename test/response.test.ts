@@ -1,5 +1,4 @@
 import * as bagger from '../lib/bagger';
-import { JSONSchema7 } from 'json-schema';
 import * as joi from '@hapi/joi';
 
 describe('Swagger Response', () => {
@@ -15,10 +14,7 @@ describe('Swagger Response', () => {
   });
 
   test('Responses could have contents that have a specified type', () => {
-    const schema: JSONSchema7 = {
-      type: 'string',
-      examples: ['foo']
-    };
+    const schema = joi.string().example('foo');
 
     const response = bagger.response(200).content('application/json', schema);
 
