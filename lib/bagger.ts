@@ -5,8 +5,7 @@ import { BaggerConfiguration, BaggerConfigurationInternal } from './configuratio
 import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
 import { schemaStorage } from './schema_storage';
-import { JSONSchema7 } from 'json-schema';
-import { Schema } from '@hapi/joi';
+import { JoiValidationSchema, swaggerToJoiValidation } from './utils/swagger_to_joi_validation';
 
 const internalConfiguration = new BaggerConfigurationInternal();
 const configuration = new BaggerConfiguration(internalConfiguration);
@@ -60,6 +59,7 @@ export function compile(): OpenAPIObject {
   return internalConfiguration.compile();
 }
 
-export function getRequestSchema(path: string, method: string): JSONSchema7 | Schema {
-  return schemaStorage.getRequestSchema(path, method);
+export function getRequestSchema(path: string, method: string, contentType?: string): JoiValidationSchema {
+  const schema = schemaStorage.getRequestSchema(path, method, contentType);
+  return swaggerToJoiValidation(schema);
 }

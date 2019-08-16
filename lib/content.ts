@@ -1,6 +1,5 @@
 import { parse as validateMediaType } from 'content-type';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
-import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
 import { ContentObject } from 'openapi3-ts';
 
@@ -12,9 +11,15 @@ export class BaggerInvalidMediaTypeError extends Error {}
 
 export class BaggerDuplicateMediaTypeError extends Error {}
 
+export class BaggerSchemaNotSetForMediaType extends Error {}
+
 interface InternalContent {
   mediaType: string;
-  schema: JSONSchema7 | Schema;
+  schema: Schema;
+}
+
+export interface ContentSchemas {
+  [key: string]: Schema;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,7 +30,7 @@ function isJoi(schema: any): schema is Schema {
 export class Content {
   private internals: InternalContent[] = [];
 
-  public add(mediaType: string, schema: JSONSchema7 | Schema): Content {
+  public add(mediaType: string, schema: Schema): Content {
     if (!validateMediaType(mediaType)) {
       throw new BaggerInvalidMediaTypeError();
     }
@@ -37,6 +42,13 @@ export class Content {
       schema
     });
     return this;
+  }
+
+  public getSchemas(): ContentSchemas {
+    return this.internals.reduce((prev: ContentSchemas, curr: InternalContent): ContentSchemas => {
+      prev[curr.mediaType] = curr.schema;
+      return prev;
+    }, {});
   }
 
   /**

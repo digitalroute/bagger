@@ -1,26 +1,52 @@
-import { JSONSchema7 } from 'json-schema';
 import { Schema } from '@hapi/joi';
+import { ContentSchemas } from './content';
 
 export class BaggerSchemaDoesNotExistForKeyError extends Error {}
 
+export interface SchemaDefinition {
+  body?: Schema;
+  query?: Schema;
+  header?: Schema;
+  path?: Schema;
+  cookie?: Schema;
+}
+
+export interface PathSchema {
+  [contentType: string]: SchemaDefinition;
+}
+interface RequestToSchema {
+  [key: string]: PathSchema;
+}
 class SchemaStorage {
-  private requestToSchema: Map<string, JSONSchema7 | Schema> = new Map<string, JSONSchema7 | Schema>();
+  private requestToSchema: RequestToSchema = {};
 
   private buildKey(path: string, method: string): string {
     return `${method.toUpperCase()}_${path.toUpperCase()}`;
   }
 
-  public addRequestSchema(path: string, method: string, schema: JSONSchema7 | Schema): void {
-    this.requestToSchema.set(this.buildKey(path, method), schema);
+  public addRequestSchemas(path: string, method: string, schemas: ContentSchemas, type: keyof SchemaDefinition): void {
+    const key = this.buildKey(path, method);
+    if (!this.requestToSchema[key]) {
+      this.requestToSchema[key] = {};
+    }
+    Object.keys(schemas).forEach((contentType: string): void => {
+      if (!this.requestToSchema[key][contentType]) {
+        this.requestToSchema[key][contentType] = {};
+      }
+      this.requestToSchema[key][contentType][type] = schemas[contentType];
+    });
   }
 
-  public getRequestSchema(path: string, method: string): JSONSchema7 | Schema {
+  public getRequestSchema(path: string, method: string, contentType: string = 'application/json'): SchemaDefinition {
     const key = this.buildKey(path, method);
-    const schema = this.requestToSchema.get(key);
+    const schema = this.requestToSchema[key];
     if (!schema) {
       throw new BaggerSchemaDoesNotExistForKeyError();
     }
-    return schema;
+    if (!schema[contentType]) {
+      throw new BaggerSchemaDoesNotExistForKeyError();
+    }
+    return schema[contentType];
   }
 }
 

@@ -1,5 +1,6 @@
 import { ParameterObject, ParameterStyle, SchemaObject, ReferenceObject, ExampleObject } from 'openapi3-ts';
-import { Content } from './content';
+import { Content, ContentSchemas } from './content';
+import { Schema } from '@hapi/joi';
 
 interface ExamplesObject {
   [param: string]: ExampleObject | ReferenceObject;
@@ -9,9 +10,14 @@ export type ParameterType = 'path' | 'query' | 'cookie' | 'header';
 
 export class BaggerParameter {
   private settings: ParameterObject;
+  private _content: Content = new Content();
 
   public constructor(type: ParameterType, name: string) {
     this.settings = { in: type, name };
+  }
+
+  public getType(): ParameterType {
+    return this.settings.in;
   }
 
   public description(description: string): BaggerParameter {
@@ -59,12 +65,17 @@ export class BaggerParameter {
     return this;
   }
 
-  public content(content: Content): BaggerParameter {
-    this.settings.content = content.compile();
+  public addContent(contentType: string, schema: Schema): BaggerParameter {
+    this._content.add(contentType, schema);
     return this;
   }
 
+  public getSchemas(): ContentSchemas {
+    return this._content.getSchemas();
+  }
+
   public compile(): ParameterObject {
+    this.settings.content = this._content.compile();
     return this.settings;
   }
 }
