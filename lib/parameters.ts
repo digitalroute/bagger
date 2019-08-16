@@ -16,6 +16,9 @@ export class BaggerParameter {
     this.settings = { in: type, name };
   }
 
+  /**
+   * Returns the type of this parameter. E.g. where the parameter is located.
+   */
   public getType(): ParameterType {
     return this.settings.in;
   }
