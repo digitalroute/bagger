@@ -11,6 +11,10 @@ import {
 import { cleanObject } from './utils/clean_object';
 import { validateSchema } from './utils/validate_schema';
 import { BaggerSchemaComponent, SchemaComponentObject } from './component';
+import { Schema } from '@hapi/joi';
+
+class BaggerMultipleComponentsWithSameNameFoundError extends Error {}
+class BaggerComponentNotFoundError extends Error {}
 
 interface SwaggerConfiguration {
   info: InfoObject;
@@ -85,6 +89,17 @@ export class BaggerConfigurationInternal {
 
   public addSchemaComponent(component: BaggerSchemaComponent): void {
     this.components.schemas.push(component);
+  }
+
+  public getSchemaComponent(name: string): Schema {
+    const schemas = this.components.schemas.filter(schema => schema.getName() === name);
+    if (schemas.length === 0) {
+      throw new BaggerComponentNotFoundError();
+    }
+    if (schemas.length > 1) {
+      throw new BaggerMultipleComponentsWithSameNameFoundError();
+    }
+    return schemas[0].getSchema() as Schema;
   }
 
   public setInfo(info: InfoObject): void {

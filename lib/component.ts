@@ -31,6 +31,14 @@ export class BaggerSchemaComponent {
     }
   }
 
+  public getName(): string {
+    return this.name;
+  }
+
+  public getSchema(): Schema | ReferenceObject {
+    return this.schema;
+  }
+
   public compile(): { name: string; schema: SchemaObject | ReferenceObject } {
     return {
       name: this.name,
@@ -55,5 +63,17 @@ export class BaggerComponentAdder {
     const component = new BaggerSchemaComponent(name, schema);
     this.internalConfiguration.addSchemaComponent(component);
     return component;
+  }
+}
+
+export class BaggerComponentGetter {
+  private internalConfiguration: BaggerConfigurationInternal;
+
+  public constructor(internalConfiguration: BaggerConfigurationInternal) {
+    this.internalConfiguration = internalConfiguration;
+  }
+
+  public getSchema(name: string): Schema {
+    return this.internalConfiguration.getSchemaComponent(name);
   }
 }
