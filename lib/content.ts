@@ -18,11 +18,6 @@ export interface ContentSchemas {
   [key: string]: Schema;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isJoi(schema: any): schema is Schema {
-  return schema.isJoi;
-}
-
 export class Content {
   private internals: InternalContent[] = [];
 
