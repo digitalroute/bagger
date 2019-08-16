@@ -1,6 +1,10 @@
-import { ParameterObject, ParameterStyle, SchemaObject, ReferenceObject, ExampleObject } from 'openapi3-ts';
+import { ParameterObject, ParameterStyle, ReferenceObject, ExampleObject } from 'openapi3-ts';
 import { Content, ContentSchemas } from './content';
 import { Schema } from '@hapi/joi';
+import { createSwaggerDefinition } from './utils/create_swagger_definition';
+
+class BaggerContentDefinedForParameterError extends Error {}
+class BaggerSchemaDefinedForParameterError extends Error {}
 
 interface ExamplesObject {
   [param: string]: ExampleObject | ReferenceObject;
@@ -11,6 +15,7 @@ export type ParameterType = 'path' | 'query' | 'cookie' | 'header';
 export class BaggerParameter {
   private settings: ParameterObject;
   private _content: Content = new Content();
+  private _schema?: Schema;
 
   public constructor(type: ParameterType, name: string) {
     this.settings = { in: type, name };
@@ -89,8 +94,11 @@ export class BaggerParameter {
     return this;
   }
 
-  public schema(schema: SchemaObject | ReferenceObject): BaggerParameter {
-    this.settings.schema = schema;
+  public schema(schema: Schema): BaggerParameter {
+    if (Object.keys(this._content.getSchemas()).length > 0) {
+      throw new BaggerContentDefinedForParameterError();
+    }
+    this._schema = schema;
     return this;
   }
 
@@ -100,16 +108,32 @@ export class BaggerParameter {
   }
 
   public addContent(contentType: string, schema: Schema): BaggerParameter {
+    if (this.settings.schema) {
+      throw new BaggerSchemaDefinedForParameterError();
+    }
     this._content.add(contentType, schema);
     return this;
   }
 
   public getSchemas(): ContentSchemas {
+    if (this._schema) {
+      return {
+        'application/json': this._schema
+      };
+    }
     return this._content.getSchemas();
   }
 
   public compile(): ParameterObject {
-    this.settings.content = this._content.compile();
+    if (this._schema) {
+      this.settings.schema = {
+        'application/json': {
+          schema: createSwaggerDefinition(this._schema)
+        }
+      };
+    } else {
+      this.settings.content = this._content.compile();
+    }
     return this.settings;
   }
 }
