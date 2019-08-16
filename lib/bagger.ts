@@ -4,13 +4,14 @@ import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
 import { OpenAPIObject } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
-import { BaggerComponentAdder } from './component';
+import { BaggerComponentAdder, BaggerComponentGetter } from './component';
 import { schemaStorage } from './schema_storage';
 import { JoiValidationSchema, swaggerToJoiValidation } from './utils/swagger_to_joi_validation';
 
 const internalConfiguration = new BaggerConfigurationInternal();
 const configuration = new BaggerConfiguration(internalConfiguration);
 const componentAdder = new BaggerComponentAdder(internalConfiguration);
+const componentGetter = new BaggerComponentGetter(internalConfiguration);
 
 /**
  * Creates a Response object
@@ -71,6 +72,13 @@ export function addRequest(path: string, method: Method): BaggerRequest {
  */
 export function addComponent(): BaggerComponentAdder {
   return componentAdder;
+}
+
+/**
+ * Get a reusable component.
+ */
+export function getComponent(): BaggerComponentGetter {
+  return componentGetter;
 }
 
 /**
