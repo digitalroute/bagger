@@ -36,7 +36,7 @@ describe('Bagger compiler', () => {
       .addTag('bags')
       .body(bagger.requestBody().content('application/json', schema))
       .addResponse(bagger.response(200).description('Bought a bag!'));
-    expect(bagger.getRequestSchema('/bags', 'post')).toEqual(schema);
+    expect(bagger.getRequestSchema('/bags', 'post')).toEqual({ body: schema });
     expect(bagger.compile()).toMatchSnapshot();
   });
 });
