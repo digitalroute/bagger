@@ -38,7 +38,7 @@ export class BaggerRequestBody {
   }
 
   /**
-   * Get the `hapi/joi` schema that is used to describe the body content. It can be used for validating requests in runtime.
+   * Get the `hapi/joi` schemas that is used to describe the body content. It can be used for validating requests in runtime.
    */
   public getSchemas(): ContentSchemas {
     return this._content.getSchemas();
