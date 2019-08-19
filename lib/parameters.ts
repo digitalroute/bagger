@@ -27,6 +27,13 @@ export class BaggerParameter {
   public getType(): ParameterType {
     return this.settings.in;
   }
+
+  /**
+   * Returns the name of this parameter.
+   */
+  public getName(): string {
+    return this.settings.name;
+  }
   
   /**
    * Describe the parameter.
