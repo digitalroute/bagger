@@ -89,7 +89,7 @@ export class BaggerRequest {
     if (!this.operationContext.parameters) {
       this.operationContext.parameters = [];
     }
-    schemaStorage.addRequestSchemas(this.path, this.method, parameter.getSchemas(), parameter.getType());
+    schemaStorage.addRequestSchemas(this.path, this.method, parameter.getSchemas(), parameter.getType(), parameter.getName());
     this.operationContext.parameters.push(parameter.compile());
     return this;
   }
