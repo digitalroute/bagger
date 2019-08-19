@@ -133,11 +133,7 @@ export class BaggerParameter {
 
   public compile(): ParameterObject {
     if (this._schema) {
-      this.settings.schema = {
-        'application/json': {
-          schema: createSwaggerDefinition(this._schema)
-        }
-      };
+      this.settings.schema = createSwaggerDefinition(this._schema);
     } else {
       this.settings.content = this._content.compile();
     }
