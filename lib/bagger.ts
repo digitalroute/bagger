@@ -18,7 +18,7 @@ const componentGetter = new BaggerComponentGetter(internalConfiguration);
  * @returns A bagger response that can be used to create a compiled Swagger definition.
  * @example
  * ```js
- * const bagger = require('.');
+ * const bagger = require('digitalroute/bagger');
  * 
  * const getBags = bagger
  *   .response(200)
@@ -38,8 +38,8 @@ export function response(httpCode: number): BaggerResponse {
  * addRequest for the same path multiple times.
  * @example
  * ```js
- * const bagger = require('.');
- * const joi = require('@hapi/joi');
+ * const bagger = require('digitalroute/bagger');
+ * const joi = require('hapi/joi');
  *
  * bagger
  *   .addRequest('/bags', 'get')
@@ -84,8 +84,8 @@ export function getComponent(): BaggerComponentGetter {
  * Create a request body used for defining a body in a bagger request
  * @example
  * ```js
- * const bagger = require('.');
- * const joi = require('@hapi/joi');
+ * const bagger = require('digitalroute/bagger');
+ * const joi = require('hapi/joi');
  *
  * const body = bagger
  *   .requestBody()
