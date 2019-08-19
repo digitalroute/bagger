@@ -16,7 +16,7 @@ A joi-compatible tool for building swagger (Open API 3) definitions. It enables 
 ## Example
 
 ```js
-const bagger = require('bagger');
+const bagger = require('@digitalroute/bagger');
 const joi = require('@hapi/joi');
 
 bagger.configure({
