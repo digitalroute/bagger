@@ -18,7 +18,7 @@ const componentGetter = new BaggerComponentGetter(internalConfiguration);
  * @returns A bagger response that can be used to create a compiled Swagger definition.
  * @example
  * ```js
- * const bagger = require('.');
+ * const bagger = require('digitalroute/bagger');
  * 
  * const getBags = bagger
  *   .response(200)
