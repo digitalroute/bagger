@@ -37,7 +37,7 @@ export function response(httpCode: number): BaggerResponse {
  * @param method HTTP method for this path. Multiple methods can be added for a path by calling
  * addRequest for the same path multiple times.
  * @example
- * ```
+ * ```js
  * const bagger = require('.');
  * const joi = require('@hapi/joi');
  *
@@ -83,7 +83,7 @@ export function getComponent(): BaggerComponentGetter {
 /**
  * Create a request body used for defining a body in a bagger request
  * @example
- * ```
+ * ```js
  * const bagger = require('.');
  * const joi = require('@hapi/joi');
  *
@@ -112,7 +112,7 @@ export function requestBody(): BaggerRequestBody {
 /**
  * Create a parameter used for defining query, path, cookie or header parameter in bagger requests.
  * @example
- * ```
+ * ```js
  * const bagger = require('bagger');
  * const parameter = bagger
  *   .parameter()
@@ -140,7 +140,7 @@ export function parameter(): { [key in ParameterType]: (name: string) => BaggerP
 /**
  * Get the configuration object for bagger. This defines the configuration for all endpoints.
  * @example
- * ```
+ * ```js
  * const bagger = require('bagger');
  * bagger
  *   .configure()

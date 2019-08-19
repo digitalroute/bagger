@@ -5,15 +5,11 @@ Object {
   "in": "path",
   "name": "bagType",
   "schema": Object {
-    "application/json": Object {
-      "schema": Object {
-        "enum": Array [
-          "backpack",
-          "duffel",
-        ],
-        "type": "string",
-      },
-    },
+    "enum": Array [
+      "backpack",
+      "duffel",
+    ],
+    "type": "string",
   },
 }
 `;
