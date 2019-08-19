@@ -22,4 +22,28 @@ describe('Schema storage', () => {
     const schema = schemaStorage.getRequestSchema('on-the-highway', 'post');
     expect(schema).toEqual(expectedSchema);
   });
+
+  test('Add multiple query parameters and get concatenated schema', () => {
+    const schemas: Record<string, joi.Schema> = {
+      backpack: joi.string().required(),
+      size: joi.number().integer().default(20),
+      unit: joi.string().valid(['L', 'c.c.'])
+    };
+    const expectedSchema = {
+      query: schemas
+    };
+    Object.keys(schemas).forEach((key): void => {
+      schemaStorage.addRequestSchemas(
+        'bags',
+        'post',
+        {
+          'application/json': schemas[key]
+        },
+        'query',
+        key
+      )
+    });
+    const res = schemaStorage.getRequestSchema('bags', 'post');
+    expect(res).toEqual(expectedSchema);
+  })
 });
