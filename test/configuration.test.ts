@@ -39,4 +39,19 @@ describe('Bagger compiler', () => {
     expect(bagger.getRequestSchema('/bags', 'post')).toEqual({ body: schema });
     expect(bagger.compile()).toMatchSnapshot();
   });
+
+  test('Add security scheme and compile', () => {
+    bagger.configure().info(defaultInfo);
+    bagger.addComponent().security(
+      bagger
+        .securityComponent('ApiKeyAuth', 'apiKey')
+        .in('header')
+        .name('Authorization')
+    );
+    bagger
+      .addRequest('/bags', 'get')
+      .addTag('bags')
+      .addResponse(bagger.response(200).description('Got bags!'));
+    //expect(bagger.compile()).toMatchSnapshot();
+  });
 });

@@ -2,9 +2,9 @@ import { BaggerResponse } from './response';
 import { BaggerRequest, Method } from './request';
 import { BaggerRequestBody } from './request_body';
 import { BaggerConfiguration, BaggerConfigurationInternal } from './configuration';
-import { OpenAPIObject } from 'openapi3-ts';
+import { OpenAPIObject, SecuritySchemeType } from 'openapi3-ts';
 import { BaggerParameter, ParameterType } from './parameters';
-import { BaggerComponentAdder, BaggerComponentGetter } from './component';
+import { BaggerComponentAdder, BaggerComponentGetter, BaggerSecurityComponent } from './component';
 import { schemaStorage, SchemaDefinition } from './schema_storage';
 
 const internalConfiguration = new BaggerConfigurationInternal();
@@ -64,6 +64,10 @@ export function addRequest(path: string, method: Method): BaggerRequest {
   const request = new BaggerRequest(path, method);
   internalConfiguration.addRequest(request);
   return request;
+}
+
+export function securityComponent(name: string, type: SecuritySchemeType): BaggerSecurityComponent {
+  return new BaggerSecurityComponent(name, type);
 }
 
 /**

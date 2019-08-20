@@ -4,6 +4,7 @@ exports[`Bagger compiler A request can be included 1`] = `
 Object {
   "components": Object {
     "schemas": Object {},
+    "securitySchemes": Object {},
   },
   "info": Object {
     "description": "Provides resources related to building swagger definitions",
@@ -33,6 +34,7 @@ exports[`Bagger compiler Add a request and get the schema 1`] = `
 Object {
   "components": Object {
     "schemas": Object {},
+    "securitySchemes": Object {},
   },
   "info": Object {
     "description": "Provides resources related to building swagger definitions",
@@ -94,6 +96,7 @@ exports[`Bagger compiler An empty definition should compile 1`] = `
 Object {
   "components": Object {
     "schemas": Object {},
+    "securitySchemes": Object {},
   },
   "info": Object {
     "description": "Provides resources related to building swagger definitions",
