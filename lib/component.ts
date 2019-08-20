@@ -1,5 +1,5 @@
 import { Schema } from '@hapi/joi';
-import { SchemaObject, ReferenceObject } from 'openapi3-ts';
+import { SchemaObject, ReferenceObject, SecuritySchemeType, SecuritySchemeObject } from 'openapi3-ts';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
 import { BaggerConfigurationInternal } from './configuration';
 
@@ -9,9 +9,66 @@ export interface SchemaComponentObject {
   [schema: string]: SchemaObject | ReferenceObject;
 }
 
+export interface SecuritySchemeComponentObject {
+  [name: string]: SecuritySchemeObject;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isReference(value: any): value is ReferenceObject {
   return value.$ref && typeof value.$ref === 'string';
+}
+
+export class BaggerSecurityComponent {
+  private key: string;
+  private _name?: string;
+  private type: SecuritySchemeType;
+  private _scheme?: string;
+  private _in?: string;
+  private _openIdConnectUrl?: string;
+  private _description?: string;
+
+  public constructor(key: string, type: SecuritySchemeType) {
+    this.key = key;
+    this.type = type;
+  }
+
+  public scheme(scheme: string): BaggerSecurityComponent {
+    this._scheme = scheme;
+    return this;
+  }
+
+  public in(location: string): BaggerSecurityComponent {
+    this._in = location;
+    return this;
+  }
+
+  public openIdConnectUrl(openIdConnectUrl: string): BaggerSecurityComponent {
+    this._openIdConnectUrl = openIdConnectUrl;
+    return this;
+  }
+
+  public description(description: string): BaggerSecurityComponent {
+    this._description = description;
+    return this;
+  }
+
+  public name(name: string): BaggerSecurityComponent {
+    this._name = name;
+    return this;
+  }
+
+  public compile(): { [key: string]: SecuritySchemeObject } {
+    return {
+      [this.key]: {
+        type: this.type,
+        description: this._description,
+        in: this._in,
+        scheme: this._scheme,
+        openIdConnectUrl: this._openIdConnectUrl,
+        name: this._name
+      }
+    };
+  }
 }
 
 export class BaggerSchemaComponent {
@@ -52,6 +109,11 @@ export class BaggerComponentAdder {
 
   public constructor(internalConfiguration: BaggerConfigurationInternal) {
     this.internalConfiguration = internalConfiguration;
+  }
+
+  public security(component: BaggerSecurityComponent): BaggerSecurityComponent {
+    this.internalConfiguration.addSecurityComponent(component);
+    return component;
   }
 
   /**

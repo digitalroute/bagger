@@ -20,6 +20,7 @@ Object {
         "type": "object",
       },
     },
+    "securitySchemes": Object {},
   },
   "info": Object {
     "title": "",

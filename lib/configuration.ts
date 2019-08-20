@@ -1,7 +1,6 @@
 import { BaggerRequest } from './request';
 import {
   ExternalDocumentationObject,
-  SecurityRequirementObject,
   ServerObject,
   InfoObject,
   OpenAPIObject,
@@ -10,7 +9,12 @@ import {
 } from 'openapi3-ts';
 import { cleanObject } from './utils/clean_object';
 import { validateSchema } from './utils/validate_schema';
-import { BaggerSchemaComponent, SchemaComponentObject } from './component';
+import {
+  BaggerSchemaComponent,
+  SchemaComponentObject,
+  BaggerSecurityComponent,
+  SecuritySchemeComponentObject
+} from './component';
 import { Schema } from '@hapi/joi';
 
 class BaggerMultipleComponentsWithSameNameFoundError extends Error {}
@@ -19,7 +23,6 @@ class BaggerComponentNotFoundError extends Error {}
 interface SwaggerConfiguration {
   info: InfoObject;
   servers?: ServerObject[];
-  security?: SecurityRequirementObject[];
   externalDocs?: ExternalDocumentationObject;
 }
 
@@ -49,15 +52,6 @@ export class BaggerConfiguration {
   }
 
   /**
-   * Add an authentication component to the OpenAPI schema.
-   * @param security The authentication object.
-   */
-  public addSecurity(security: SecurityRequirementObject): BaggerConfiguration {
-    this.internalConfiguration.addSecurity(security);
-    return this;
-  }
-
-  /**
    * Define external documentation for the OpenAPI schema.
    * @param externalDocs The external documentation object. Containing an URL.
    */
@@ -69,12 +63,14 @@ export class BaggerConfiguration {
 
 interface BaggerComponents {
   schemas: BaggerSchemaComponent[];
+  securitySchemes: BaggerSecurityComponent[];
 }
 
 export class BaggerConfigurationInternal {
   private requests: BaggerRequest[] = [];
   private components: BaggerComponents = {
-    schemas: []
+    schemas: [],
+    securitySchemes: []
   };
   private configuration: SwaggerConfiguration = {
     info: {
@@ -85,6 +81,10 @@ export class BaggerConfigurationInternal {
 
   public addRequest(request: BaggerRequest): void {
     this.requests.push(request);
+  }
+
+  public addSecurityComponent(component: BaggerSecurityComponent): void {
+    this.components.securitySchemes.push(component);
   }
 
   public addSchemaComponent(component: BaggerSchemaComponent): void {
@@ -111,13 +111,6 @@ export class BaggerConfigurationInternal {
       this.configuration.servers = [];
     }
     this.configuration.servers.push(server);
-  }
-
-  public addSecurity(security: SecurityRequirementObject): void {
-    if (!this.configuration.security) {
-      this.configuration.security = [];
-    }
-    this.configuration.security.push(security);
   }
 
   public setExternalDocs(externalDocs: ExternalDocumentationObject): void {
@@ -150,10 +143,23 @@ export class BaggerConfigurationInternal {
     }, {});
   }
 
+  public compileSecurityComponents(): SecuritySchemeComponentObject {
+    const unmergedComponents = this.components.securitySchemes.map(component => component.compile());
+    return unmergedComponents.reduce((securitySchemes: SecuritySchemeComponentObject, component) => {
+      securitySchemes = {
+        ...securitySchemes,
+        ...component
+      };
+      return securitySchemes;
+    }, {});
+  }
+
   private compileComponents(): ComponentsObject {
     const schemas = this.compileSchemaComponents();
+    const securitySchemes = this.compileSecurityComponents();
     return {
-      schemas
+      schemas,
+      securitySchemes
     };
   }
 
