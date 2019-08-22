@@ -5,11 +5,11 @@
 [![CircleCI](https://img.shields.io/circleci/build/github/digitalroute/bagger/master?style=flat-square)](https://circleci.com/gh/digitalroute/workflows/bagger)
 [![license](https://img.shields.io/github/license/digitalroute/bagger.svg?style=flat-square)](https://github.com/digitalroute/bagger/blob/master/LICENSE)
 
-A joi-compatible tool for building swagger (Open API 3) definitions. It enables developers to use the same joi schemas for validation and documentation, ensuring that API documentation never becomes stale.
+A joi-compatible tool for building Swagger (Open API 3) documents. It enables developers to use the same joi schemas for validation and documentation, ensuring that API documentation never becomes stale.
 
 ## Features
 
-- 🔨 **Builder pattern:** Dead simple api to create complex Swagger definitions.
+- 🔨 **Builder pattern:** Dead simple api to create complex Swagger documents.
 - ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation.
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
 
@@ -22,7 +22,7 @@ const joi = require('@hapi/joi');
 bagger.configure({
   title: 'Bagger API',
   version: 'v1',
-  description: 'Provides resources for building swagger definitions'
+  description: 'Provides resources for building swagger documents'
 });
 
 bagger
