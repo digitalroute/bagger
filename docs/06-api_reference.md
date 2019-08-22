@@ -229,9 +229,55 @@ They are described in more detail under [`bagger.parameter().<type>(name)`](#bag
 
 ## `bagger.response(httpCode)`
 
+- `httpCode`: number
+
+All requests have to have at least one defined response. This returns a response object that can be used to describe different possible responses to requests. The `httpCode` is used to describe what the HTTP Code of the response will be.
+
+Read [Describing Responses](https://swagger.io/docs/specification/describing-responses/) for more information.
+
+```js
+const bagger = require('@digitalroute/bagger');
+const joi = require('@hapi/joi');
+
+const successfulResponse = bagger
+  .response(200)
+  .description('A JSON object containing bags')
+  .content(
+    'application/json',
+    joi.array().items(
+      joi.object.keys({
+        color: joi.string(),
+        name: joi.string()
+      })
+    )
+  );
+
+const badResponse = bagger.response(400).description('Bad request');
+
+bagger
+  .addRequest('/bags', 'get')
+  .addResponse(successfulResponse)
+  .addResponse(badResponse);
+```
+
 ### `.description(description)`
 
+- `description`: string
+
+Every response requires a description that describes the response. Markdown ([CommonMark](https://commonmark.org/help/)) can be used for rich text representation.
+
 ### `.content(mediaType, schema)`
+
+- `mediaType`: string
+- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+
+Responses can have a response body. They are described with `content()`. The media type describes the format of the response body. Examples are:
+
+- `application/json`
+- `application/xml`
+- `text/plain`
+
+The schema describes the format of the body. Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
 
 ## `bagger.requestBody()`
 
