@@ -289,28 +289,146 @@ The schema describes the format of the body. Bagger uses joi schemas and transla
 
 ## `bagger.parameter().<type>(name)`
 
+- `type`: `'path'` | `'query'` | `'cookie'` | `'header'`
+- `name`: `string`
+
+Create a parameter used for defining query, path, cookie or header parameter in bagger requests.
+
+```js
+const bagger = require('bagger');
+
+const parameter = bagger
+  .parameter()
+  .path('bagId')
+  .schema(joi.string().required())
+  .description('ID of one bag')
+  .explode(true)
+  .required(true);
+
+bagger.addRequest('/bags/{bagId}', 'get').addParameter(parameter);
+```
+
 ### `.getType()`
+
+Returns the name of this parameter.
 
 ### `.description(description)`
 
+- `description`: `string`
+
+Adds a description of the parameter.
+
 ### `.required(required)`
+
+- `required`: `boolean`
+
+Marks if the parameter has to be present or not.
 
 ### `.deprecated(deprecated)`
 
+- `deprecated`: `boolean`
+
+Marks a parameer as deprecated if set to `true`
+
 ### `.allowEmptyValue(allowEmptyValue)`
+
+- `allowEmptyValue`: `boolean`
+
+Query string parameters may only have a name and no value, like:
+
+```
+GET /foo?metadata
+```
+
+This marks if an empty value is allowed or not.
 
 ### `.style(style)`
 
+- `style`: `'matrix'` | `'label'` | `'form'` | `'simple'` | `'spaceDelimited'` | `'pipeDelimited'` | `'deepObject'`
+
+Parameters containing arrays and objects can be serialized in different ways. Style defines how multiple values are delimited.
+Read more at: [https://swagger.io/docs/specification/serialization/](https://swagger.io/docs/specification/serialization/)
+
 ### `.explode(explode)`
+
+- `explode`: `boolean`
+
+Parameters containing arrays and objects can be serialized in different ways. Explode specifies whether arrays and objects should generate separate parameters for each array item or object property. Read more at: [https://swagger.io/docs/specification/serialization/](https://swagger.io/docs/specification/serialization/)
 
 ### `.allowReserved(allowReserved)`
 
+- `allowReserved`: `boolean`
+
+[RFC 3986](https://tools.ietf.org/html/rfc3986#section-2.2) defines a set of reserved characters `:/?#[]@!$&'()*+,;=` that are used as URI component delimiters.
+When these characters need to be used literally in a query parameter value, they are usually percent-encoded.
+For example, `/` is encoded as `%2F` (or `%2f`), so that the parameter value `quotes/h2g2.txt` would be sent as:
+
+```
+GET /file?path=quotes%2Fh2g2.txt
+```
+
+If you want a query parameter that is not percent-encoded, set allowReserved to `true`.
+
 ### `.schema(schema)`
+
+- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+
+To describe the parameter contents, you can use either the [`schema()`](#schemaschema) or [`addContent()`](addcontentcontenttype-schema) method.
+They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
+It lets you describe primitive values, as well as simple arrays and objects serialized into a string.
+The serialization method for array and object parameters is defined by the `style()` and `explode() methods used in that parameter.
+
+Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
 
 ### `.examples(examples)`
 
+- `examples`: `{ [key: string]: Joi.Schema }` ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+
+You can add examples to parameters to make OpenAPI specification of your web service clearer.
+Examples can be read by tools and libraries that process your API in some way.
+For example, an API mocking tool can use sample values to generate mock requests.
+
+The `examples` input object is an object where every key-value pair represents a named example.
+
 ### `.addContent(contentType, schema)`
 
+- `contentType`: `string`
+- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+
+To describe the parameter contents, you can use either the `schema()` or `addContent()` method.
+They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
+`addContent()` is used in complex serialization scenarios that are not covered by `style()` and `explode()`.
+For example, if you need to send a JSON string in the query string like so:
+
+```
+filter={"type":"t-shirt","color":"blue"}
+```
+
+In this case you need to define the schema by using `addContent()` like this:
+
+```js
+const joi = require('@hapi/joi');
+parameter.addContent(
+  'application/json',
+  joi.object().keys({
+    type: joi.string(),
+    color: joi.string()
+  })
+);
+```
+
+`mediaType` is the media type of the body. Like 'application/json'.
+
+`schema` describes the format of the parameter. Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
+
 ### `.getSchemas()`
+
+Returns the schema if there exists a schema.
+
+The return has the following format:
+
+```
+{ 'application/json': schema }
+```
 
 ## `bagger.getRequestSchema()`

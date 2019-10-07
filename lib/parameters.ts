@@ -34,7 +34,7 @@ export class BaggerParameter {
   public getName(): string {
     return this.settings.name;
   }
-  
+
   /**
    * Describe the parameter.
    * @param description the description of the parameter.
@@ -96,11 +96,29 @@ export class BaggerParameter {
     return this;
   }
 
+  /**
+   * [RFC 3986](https://tools.ietf.org/html/rfc3986#section-2.2) defines a set of reserved characters `:/?#[]@!$&'()*+,;=` that are used as URI component delimiters.
+   * When these characters need to be used literally in a query parameter value, they are usually percent-encoded.
+   * For example, `/` is encoded as `%2F` (or `%2f`), so that the parameter value `quotes/h2g2.txt` would be sent as:
+   *
+   * ```
+   * GET /file?path=quotes%2Fh2g2.txt
+   * ```
+   *
+   * @param allowReserved If you want a query parameter that is not percent-encoded, set allowReserved to `true`.
+   */
   public allowReserved(allowReserved: boolean): BaggerParameter {
     this.settings.allowReserved = allowReserved;
     return this;
   }
 
+  /**
+   * To describe the parameter contents, you can use either the `schema()` or `addContent()` method.
+   * They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
+   * It lets you describe primitive values, as well as simple arrays and objects serialized into a string.
+   * The serialization method for array and object parameters is defined by the `style()` and `explode() methods used in that parameter.
+   * @param schema Describes the format of the parameter. Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
+   */
   public schema(schema: Schema): BaggerParameter {
     if (Object.keys(this._content.getSchemas()).length > 0) {
       throw new BaggerContentDefinedForParameterError();
@@ -109,19 +127,52 @@ export class BaggerParameter {
     return this;
   }
 
+  /**
+   * You can add examples to parameters to make OpenAPI specification of your web service clearer.
+   * Examples can be read by tools and libraries that process your API in some way.
+   * For example, an API mocking tool can use sample values to generate mock requests.
+   * @param examples An object with Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+   */
   public examples(examples: ExamplesObject): BaggerParameter {
     this.settings.examples = examples;
     return this;
   }
 
-  public addContent(contentType: string, schema: Schema): BaggerParameter {
+  /**
+   * To describe the parameter contents, you can use either the `schema()` or `addContent()` method.
+   * They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
+   * `addContent()` is used in complex serialization scenarios that are not covered by `style()` and `explode()`.
+   * For example, if you need to send a JSON string in the query string like so:
+   *
+   * ```
+   * filter={"type":"t-shirt","color":"blue"}
+   * ```
+   *
+   * In this case you need to define the schema by using `addContent()` like this:
+   *
+   * ```js
+   * const joi = require('@hapi/joi')
+   * parameter.addContent('application/json', joi.object().keys({
+   *  type: joi.string(),
+   *  color: joi.string()
+   * }))
+   * ```
+   *
+   * @param mediaType The media type of the body. Like 'application/json'
+   * @param schema Describes the format of the parameter. Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
+   */
+  public addContent(mediaType: string, schema: Schema): BaggerParameter {
     if (this.settings.schema) {
       throw new BaggerSchemaDefinedForParameterError();
     }
-    this._content.add(contentType, schema);
+    this._content.add(mediaType, schema);
     return this;
   }
 
+  /**
+   * Returns the schema if there exists a schema.
+   * @return `{ 'application/json': schema }`
+   */
   public getSchemas(): ContentSchemas {
     if (this._schema) {
       return {
