@@ -29,11 +29,11 @@ export class BaggerRequestBody {
 
   /**
    * Content describes the content of a body.
-   * @param contentType The media type of the content. Like 'application/json' or 'text/plain'. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types for more information
+   * @param mediaType The media type of the content. Like 'application/json' or 'text/plain'. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types for more information
    * @param schema A `hapi/joi` schema describing the content of the body. This can also be used for validating requests in run time by using `.getSchema()`.
    */
-  public content(contentType: string, schema: Schema): BaggerRequestBody {
-    this._content.add(contentType, schema);
+  public content(mediaType: string, schema: Schema): BaggerRequestBody {
+    this._content.add(mediaType, schema);
     return this;
   }
 

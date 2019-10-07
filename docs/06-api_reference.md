@@ -24,12 +24,13 @@ To use bagger `bagger.configure().info(info)` has to be called before `bagger.co
   - [`.description(description)`](#descriptiondescription)
   - [`.content(mediaType, schema)`](#contentmediatype-schema)
 - [`bagger.requestBody()`](#baggerrequestbody)
+  - [`.description(description)`](#descriptiondescription-1)
   - [`.required(required)`](#requiredrequired)
   - [`.content(contentType, schema)`](#contentcontenttype-schema)
   - [`.getSchemas()`](#getschemas)
 - [`bagger.parameter().<type>(name)`](#baggerparametertypename)
   - [`.getType()`](#gettype)
-  - [`.description(description)`](#descriptiondescription-1)
+  - [`.description(description)`](#descriptiondescription-2)
   - [`.required(required)`](#requiredrequired-1)
   - [`.deprecated(deprecated)`](#deprecateddeprecated-1)
   - [`.allowEmptyValue(allowEmptyValue)`](#allowemptyvalueallowemptyvalue)
@@ -284,11 +285,67 @@ The schema describes the format of the body. Bagger uses joi schemas and transla
 
 ## `bagger.requestBody()`
 
+Create a request body used for defining a body in a bagger request.
+
+```js
+const bagger = require('.');
+const joi = require('@hapi/joi');
+
+const body = bagger
+  .requestBody()
+  .description('Create a bag')
+  .content(
+    'application/json',
+    joi.object().keys({
+      type: joi
+        .string()
+        .valid(['backpack', 'duffel', 'sports'])
+        .required(),
+      size: joi
+        .array()
+        .items(
+          joi
+            .string()
+            .valid(['10L', '20L', '30L'])
+            .required()
+        )
+        .required(),
+      description: joi.string().optional()
+    })
+  )
+  .required(true);
+
+bagger.addRequest('/bags', 'post').body(body);
+```
+
+### `.description(description)`
+
+- `description`: string
+
+Set the description of the request body. Markdown ([CommonMark](https://commonmark.org/help/)) can be used for rich text representation.
+
 ### `.required(required)`
+
+- `required`: boolean
+
+Request bodies are optional by default. To mark the body as required, use required: `true`.
 
 ### `.content(contentType, schema)`
 
+- `contentType`: string
+- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+
+Requests can have a requests body. They are described with `content()`. The media type describes the format of the response body. Examples are:
+
+- `application/json`
+- `application/xml`
+- `text/plain`
+
+The schema describes the format of the body. Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
+
 ### `.getSchemas()`
+
+WIP
 
 ## `bagger.parameter().<type>(name)`
 
