@@ -141,6 +141,9 @@ router.get('/api-docs', swaggerUi.serve, swaggerUi.setup(bagger.compile()));
 
 ## `bagger.addRequest(path, method)`
 
+- `path`: `string`
+- `method`: `'get'` | `'post'` | `'patch'` | `'put'` | `'delete'` | `'options'` | `'head'` | `'trace'`
+
 Defining requests is the core of Swagger and OpenAPI 3. This method call will add a request. Requests are sometimes called [paths and operations](https://swagger.io/docs/specification/paths-and-operations/) in the Swagger docs.
 
 > **Important:** Every request has to have at least one defined response. Otherwise bagger will throw during compile.
