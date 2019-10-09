@@ -12,6 +12,7 @@ A joi-compatible tool for building Swagger (Open API 3) documents. It enables de
 - 🔨 **Builder pattern:** Dead simple api to create complex Swagger documents.
 - ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation.
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
+- 🔒 **Type safety:** Bagger always produces 100% valid Swagger documents. If you use TypeScript the compiler will enforce correctness in most cases, and otherwise Bagger will validate during compilation.
 
 ## Example
 
@@ -52,24 +53,12 @@ const swaggerDefinition = bagger.compile();
 - [Introduction](/docs/01-introduction.md)
   - [Getting started](/docs/01-introduction.md#getting-started)
   - [Working with multiple files](/docs/01-introduction.md#working-with-multiple-files)
-- [Adding requests](/docs/02-requests.md) 🚧 Under construction 🚧
-- [Creating resources](/docs/03-resources.md) 🚧 Under construction 🚧
-  - Response
-  - Content
-  - Request body
-- [Validating with joi](/docs/04-validation.md) 🚧 Under construction 🚧
-  - Adding parameters
-  - TODO: Adding body validation?
-  - Getting validation schemas
-- [Components](/docs/05-components.md) 🚧 Under construction 🚧
-  - Declaring components
-  - Referancing components
-- [API Reference](/docs/06-api_reference.md) 🚧 Under construction 🚧
-  - `bagger.configure()`
-  - `bagger.compile()`
-  - `bagger.addRequest(path, method)`
-  - `bagger.addComponent()`
-  - `bagger.response(httpCode)`
-  - `bagger.requestBody()`
-  - `bagger.parameter()`
-  - `bagger.getRequestSchema()`
+- [API Reference](/docs/02-api_reference.md)
+  - [`bagger.configure()`](/docs/02-api_reference.md#baggerconfigure)
+  - [`bagger.compile()`](/docs/02-api_reference.md#baggercompile)
+  - [`bagger.addRequest(path, method)`](/docs/02-api_reference.md#baggeraddrequestpath-method)
+  - [`bagger.addComponent()`](/docs/02-api_reference.md#baggeraddcomponent)
+  - [`bagger.response(httpCode)`](/docs/02-api_reference.md#baggerresponsehttpcode)
+  - [`bagger.requestBody()`](/docs/02-api_reference.md#baggerrequestbody)
+  - [`bagger.parameter().<type>(name)`](/docs/02-api_reference.md#baggerparametertypename)
+  - [`bagger.getRequestSchema()`](/docs/02-api_reference.md#baggergetrequestschema)
