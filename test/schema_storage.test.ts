@@ -23,10 +23,19 @@ describe('Schema storage', () => {
     expect(schema).toEqual(expectedSchema);
   });
 
+  test(`Don't add key and get schema should error`, () => {
+    expect(() => schemaStorage.getRequestSchema('not-mentioned-before', 'post')).toThrowErrorMatchingInlineSnapshot(
+      `"Bagger could not find the schema for key: POST_NOT-MENTIONED-BEFORE. Make sure that you define request schemas before getting them."`
+    );
+  });
+
   test('Add multiple query parameters and get concatenated schema', () => {
     const schemas: Record<string, joi.Schema> = {
       backpack: joi.string().required(),
-      size: joi.number().integer().default(20),
+      size: joi
+        .number()
+        .integer()
+        .default(20),
       unit: joi.string().valid(['L', 'c.c.'])
     };
     const expectedSchema = {
@@ -41,9 +50,9 @@ describe('Schema storage', () => {
         },
         'query',
         key
-      )
+      );
     });
     const res = schemaStorage.getRequestSchema('bags', 'post');
     expect(res).toEqual(expectedSchema);
-  })
+  });
 });
