@@ -1,7 +1,13 @@
 import { Schema } from '@hapi/joi';
 import { ContentSchemas } from './content';
 
-export class BaggerSchemaDoesNotExistForKeyError extends Error {}
+export class BaggerSchemaDoesNotExistForKeyError extends Error {
+  constructor(key: string) {
+    super(
+      `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
+    );
+  }
+}
 
 export class BaggerCannotAddParmeterSchemaWithoutNameError extends Error {}
 
@@ -10,6 +16,7 @@ export class BaggerCannotResolveSwaggerKeyError extends Error {}
 interface KeyToSchema {
   [key: string]: Schema;
 }
+
 export interface SchemaDefinition {
   body?: Schema;
   query?: KeyToSchema;
@@ -21,6 +28,7 @@ export interface SchemaDefinition {
 export interface PathSchema {
   [contentType: string]: SchemaDefinition;
 }
+
 interface RequestToSchema {
   [key: string]: PathSchema;
 }
@@ -35,6 +43,7 @@ class SchemaStorage {
     body: 'body',
     query: 'query'
   };
+
   private requestToSchema: RequestToSchema = {};
 
   private buildKey(path: string, method: string): string {
@@ -84,15 +93,8 @@ class SchemaStorage {
   public getRequestSchema(path: string, method: string, contentType: string = 'application/json'): SchemaDefinition {
     const key = this.buildKey(path, method);
     const schema = this.requestToSchema[key];
-    if (!schema) {
-      throw new BaggerSchemaDoesNotExistForKeyError(
-        `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
-      );
-    }
-    if (!schema[contentType]) {
-      throw new BaggerSchemaDoesNotExistForKeyError(
-        `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
-      );
+    if (!schema || !schema[contentType]) {
+      throw new BaggerSchemaDoesNotExistForKeyError(key);
     }
     return schema[contentType];
   }
