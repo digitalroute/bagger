@@ -2,7 +2,7 @@ import { Schema } from '@hapi/joi';
 import { ContentSchemas } from './content';
 
 export class BaggerSchemaDoesNotExistForKeyError extends Error {
-  constructor(key: string) {
+  public constructor(key: string) {
     super(
       `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
     );
