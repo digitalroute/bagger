@@ -47,9 +47,15 @@ class SchemaStorage {
       throw new BaggerCannotResolveSwaggerKeyError();
     }
     return type;
-  } 
+  };
 
-  public addRequestSchemas(path: string, method: string, schemas: ContentSchemas, type: SwaggerLocationTypes, parameterName?: string): void {
+  public addRequestSchemas(
+    path: string,
+    method: string,
+    schemas: ContentSchemas,
+    type: SwaggerLocationTypes,
+    parameterName?: string
+  ): void {
     const key = this.buildKey(path, method);
     if (!this.requestToSchema[key]) {
       this.requestToSchema[key] = {};
