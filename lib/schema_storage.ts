@@ -79,10 +79,14 @@ class SchemaStorage {
     const key = this.buildKey(path, method);
     const schema = this.requestToSchema[key];
     if (!schema) {
-      throw new BaggerSchemaDoesNotExistForKeyError();
+      throw new BaggerSchemaDoesNotExistForKeyError(
+        `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
+      );
     }
     if (!schema[contentType]) {
-      throw new BaggerSchemaDoesNotExistForKeyError();
+      throw new BaggerSchemaDoesNotExistForKeyError(
+        `Bagger could not find the schema for key: ${key}. Make sure that you define request schemas before getting them.`
+      );
     }
     return schema[contentType];
   }
