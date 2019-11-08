@@ -19,12 +19,11 @@ const componentGetter = new BaggerComponentGetter(internalConfiguration);
  * @example
  * ```js
  * const bagger = require('digitalroute/bagger');
- * 
+ *
  * const getBags = bagger
  *   .response(200)
  *   .description('Successfully fetched all bags')
  *   .content('text/plain', { type: 'string' });
- 
  * ```
  */
 export function response(httpCode: number): BaggerResponse {
