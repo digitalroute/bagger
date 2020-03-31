@@ -1,4 +1,4 @@
-import * as bagger from '../lib/bagger';
+import bagger from '../lib/bagger';
 import { BaggerSchemaComponent } from '../lib/component';
 import joi from '@hapi/joi';
 

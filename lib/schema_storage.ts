@@ -35,7 +35,7 @@ interface RequestToSchema {
 
 type SwaggerLocationTypes = 'cookie' | 'header' | 'path' | 'body' | 'query';
 
-class SchemaStorage {
+export class SchemaStorage {
   private readonly swaggerKeyToJoiKey = {
     cookie: 'cookies',
     header: 'headers',
@@ -99,5 +99,3 @@ class SchemaStorage {
     return schema[contentType];
   }
 }
-
-export const schemaStorage = new SchemaStorage();
