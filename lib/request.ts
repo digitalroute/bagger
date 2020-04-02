@@ -1,7 +1,7 @@
 import { BaggerResponse } from './response';
 import { BaggerRequestBody } from './request_body';
 import { BaggerParameter } from './parameters';
-import { schemaStorage } from './schema_storage';
+import { SchemaStorage } from './schema_storage';
 import {
   OperationObject,
   SecurityRequirementObject,
@@ -33,14 +33,17 @@ type OperationTypes =
 export class BaggerRequest {
   private path: string;
   private method: Method;
+  private schemaStorage: SchemaStorage;
+
   private operationContext: OperationObject = {
     responses: {}
   };
   public readonly isBagger = true;
 
-  public constructor(path: string, method: Method) {
+  public constructor(path: string, method: Method, schemaStorage: SchemaStorage) {
     this.path = path;
     this.method = method;
+    this.schemaStorage = schemaStorage;
   }
 
   private setInContext(key: keyof OperationObject, value: OperationTypes): BaggerRequest {
@@ -81,7 +84,7 @@ export class BaggerRequest {
   }
 
   public body(requestBody: BaggerRequestBody): BaggerRequest {
-    schemaStorage.addRequestSchemas(this.path, this.method, requestBody.getSchemas(), 'body');
+    this.schemaStorage.addRequestSchemas(this.path, this.method, requestBody.getSchemas(), 'body');
     return this.setInContext('requestBody', requestBody.compile());
   }
 
@@ -89,7 +92,13 @@ export class BaggerRequest {
     if (!this.operationContext.parameters) {
       this.operationContext.parameters = [];
     }
-    schemaStorage.addRequestSchemas(this.path, this.method, parameter.getSchemas(), parameter.getType(), parameter.getName());
+    this.schemaStorage.addRequestSchemas(
+      this.path,
+      this.method,
+      parameter.getSchemas(),
+      parameter.getType(),
+      parameter.getName()
+    );
     this.operationContext.parameters.push(parameter.compile());
     return this;
   }

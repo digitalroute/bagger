@@ -1,4 +1,4 @@
-import * as bagger from '../lib/bagger';
+import bagger from '../lib/bagger';
 import * as joi from '@hapi/joi';
 
 describe('Swagger Request', () => {
