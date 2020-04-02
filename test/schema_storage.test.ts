@@ -1,7 +1,11 @@
-import { schemaStorage } from '../lib/schema_storage';
+import { SchemaStorage } from '../lib/schema_storage';
 import * as joi from '@hapi/joi';
 
 describe('Schema storage', () => {
+  let schemaStorage: SchemaStorage;
+  beforeAll(() => {
+    schemaStorage = new SchemaStorage();
+  })
   test('Throw error for key that does not exist', () => {
     expect(() => schemaStorage.getRequestSchema('a-long-dusty-road', 'put')).toThrow();
   });
