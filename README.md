@@ -14,11 +14,25 @@ A joi-compatible tool for building Swagger (Open API 3) documents. It enables de
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
 - 🔒 **Type safety:** Bagger always produces 100% valid Swagger documents. If you use TypeScript the compiler will enforce correctness in most cases, and otherwise Bagger will validate during compilation.
 
+## Usage
+
+```js
+// Use the default Bagger instance
+const bagger = require('@digitalroute/bagger').default;
+
+// OR
+
+// Create a new instance
+const { Bagger } = require('@digitalroute/bagger');
+const bagger = new Bagger();
+```
+
 ## Example
 
 ```js
-const bagger = require('@digitalroute/bagger');
+const { Bagger } = require('@digitalroute/bagger');
 const joi = require('@hapi/joi');
+const bagger = new Bagger();
 
 bagger.configure({
   title: 'Bagger API',

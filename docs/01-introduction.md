@@ -36,7 +36,7 @@ Create a file called `server.js` in the project root directory:
 
 ```js
 const express = require('express');
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 const swaggerUi = require('swagger-ui-express');
 const joi = require('@hapi/joi');
 
@@ -98,7 +98,7 @@ It is possible to configuer bagger in multiple files. The only important thing i
 Create a file called `accounts.js` in the project root directory:
 
 ```js
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 
 bagger
   .addRequest('/accounts', 'get')
@@ -113,7 +113,7 @@ Update the beginning of `server.js` so that it includes `account.js`
 
 ```js
 const express = require('express');
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 const swaggerUi = require('swagger-ui-express');
 const joi = require('@hapi/joi');
 require('./accounts'); // <-- new line
