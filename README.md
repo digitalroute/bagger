@@ -41,12 +41,10 @@ bagger.configure({
 });
 
 bagger
-  .addRequest()
-  .method('get')
-  .path('/bags')
-  .tag('bags')
-  .tag('build')
-  .responses([
+  .addRequest('/bags', 'get')
+  .addTag('bags')
+  .addTag('build')
+  .addResponse(
     bagger
       .response(200)
       .description('Successfully fetched all bags')
@@ -55,9 +53,9 @@ bagger
         joi
           .array()
           .items(joi.string())
-          .example(['handbag', 'backpack'])
+          .example([['handbag', 'backpack', 'purse']])
       )
-  ]);
+  );
 
 const swaggerDefinition = bagger.compile();
 ```
