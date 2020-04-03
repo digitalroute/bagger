@@ -48,7 +48,7 @@ To use bagger `bagger.configure().info(info)` has to be called before `bagger.co
 Get the configuration object for bagger. This defines the configuration for all endpoints.
 
 ```js
-const bagger = require('bagger');
+const bagger = require('bagger').default;
 bagger
   .configure()
   .info({
@@ -129,7 +129,7 @@ This method will compile all configuration done before the method call, and retu
 ```js
 const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 
 bagger.configure();
 // ...
@@ -150,7 +150,7 @@ Defining requests is the core of Swagger and OpenAPI 3. This method call will ad
 > **Important:** Every request has to have at least one defined response. Otherwise bagger will throw during compile.
 
 ```js
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 const joi = require('@hapi/joi');
 
 bagger
@@ -240,7 +240,7 @@ All requests have to have at least one defined response. This returns a response
 Read [Describing Responses](https://swagger.io/docs/specification/describing-responses/) for more information.
 
 ```js
-const bagger = require('@digitalroute/bagger');
+const bagger = require('@digitalroute/bagger').default;
 const joi = require('@hapi/joi');
 
 const successfulResponse = bagger
@@ -355,7 +355,7 @@ WIP
 Create a parameter used for defining query, path, cookie or header parameter in bagger requests.
 
 ```js
-const bagger = require('bagger');
+const bagger = require('bagger').default;
 
 const parameter = bagger
   .parameter()
