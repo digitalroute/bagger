@@ -1,6 +1,6 @@
 import bagger from '../lib/bagger';
 import { BaggerSchemaComponent } from '../lib/component';
-import joi from '@hapi/joi';
+import joi from 'joi';
 
 describe('Using components', () => {
   describe('Schema components', () => {

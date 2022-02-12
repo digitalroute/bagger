@@ -45,16 +45,13 @@
   "homepage": "https://github.com/digitalroute/bagger",
   "dependencies": {
     "@types/content-type": "^1.1.5",
-    "@types/hapi__joi": "^17.1.8",
     "ajv": "^6.12.6",
     "content-type": "^1.0.4",
     "joi": "^17.6.0",
-    "joi-to-swagger": "^3.3.0",
-    "json-schema-to-openapi-schema": "^0.3.0",
-    "openapi3-ts": "^1.4.0"
+    "joi-to-swagger": "^6.0.1",
+    "openapi3-ts": "^2.0.1"
   },
   "devDependencies": {
-    "@hapi/joi": "^15.1.1",
     "@types/jest": "^24.9.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",

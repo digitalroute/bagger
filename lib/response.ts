@@ -1,5 +1,5 @@
 import { cleanObject } from './utils/clean_object';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { Content } from './content';
 import { ResponsesObject } from 'openapi3-ts';
 

@@ -1,4 +1,4 @@
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { SchemaObject, ReferenceObject, SecuritySchemeType, SecuritySchemeObject } from 'openapi3-ts';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
 import { BaggerConfigurationInternal } from './configuration';
@@ -119,7 +119,7 @@ export class BaggerComponentAdder {
   /**
    * Add a reusable data model (schema).
    * @param name A unique id that is used to referance the component.
-   * @param schema A `hapi/joi` schema that describes the data model.
+   * @param schema A `joi` schema that describes the data model.
    */
   public schema(name: string, schema: Schema): BaggerSchemaComponent {
     const component = new BaggerSchemaComponent(name, schema);

@@ -1,5 +1,5 @@
 import bagger from '../lib/bagger';
-import * as joi from '@hapi/joi';
+import joi from 'joi';
 
 describe('Swagger Response', () => {
   test('Creating a bagger response does return isBagger = true', () => {
@@ -22,12 +22,15 @@ describe('Swagger Response', () => {
   });
 
   test('Response content can be a joi-object', () => {
-    const schema = joi.object().keys({
-      foo: joi
-        .string()
-        .example('hello world')
-        .default('bar')
-    });
+    const schema = joi
+      .object()
+      .unknown(true)
+      .keys({
+        foo: joi
+          .string()
+          .example('hello world')
+          .default('bar')
+      });
 
     const response = bagger.response(200).content('application/json', schema);
 

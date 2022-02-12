@@ -5,6 +5,7 @@ Object {
   "components": Object {
     "schemas": Object {
       "Person": Object {
+        "additionalProperties": false,
         "properties": Object {
           "age": Object {
             "format": "float",
@@ -35,6 +36,7 @@ exports[`Using components Schema components Creating and compiling a schema comp
 Object {
   "name": "Person",
   "schema": Object {
+    "additionalProperties": false,
     "properties": Object {
       "age": Object {
         "format": "float",

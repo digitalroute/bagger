@@ -2,46 +2,46 @@
 
 To use bagger `bagger.configure().info(info)` has to be called before `bagger.compile()`. Every added request has to have at least one defined response.
 
-- [`bagger.configure()`](#baggerconfigure)
-  - [`.info(info)`](#infoinfo)
-  - [`.addServer(server)`](##addserverserver)
-  - [`.addSecurity(security)`](#addsecuritysecurity)
-  - [`.externalDocs(externalDocs)`](#externaldocsexternaldocs)
-- [`bagger.compile()`](#baggercompile)
-- [`bagger.addRequest(path, method)`](#baggeraddrequestpath-method)
-  - [`.addResponse(response)`](#addresponseresponse)
-  - [`.operationId(operationId)`](#operationidoperationid)
-  - [`.deprecated(deprecated)`](#deprecateddeprecated)
-  - [`.summary(summary)`](#summarysummary)
-  - [`.addTag(tag)`](#addtagtag)
-  - [`.addSecurity(scheme, scopes)`](#addsecurityscheme-scopes)
-    - WIP I do not know what to add?
-  - [`.body(requestBody)`](#bodyrequestbody)
-  - [`.addParameter(parameter)`](#addparameterparameter)
-- [`bagger.addComponent()`](#baggeraddcomponent)
-  - Schema WIP?
-- [`bagger.response(httpCode)`](#baggerresponsehttpcode)
-  - [`.description(description)`](#descriptiondescription)
-  - [`.content(mediaType, schema)`](#contentmediatype-schema)
-- [`bagger.requestBody()`](#baggerrequestbody)
-  - [`.description(description)`](#descriptiondescription-1)
-  - [`.required(required)`](#requiredrequired)
-  - [`.content(contentType, schema)`](#contentcontenttype-schema)
-  - [`.getSchemas()`](#getschemas)
-- [`bagger.parameter().<type>(name)`](#baggerparametertypename)
-  - [`.getType()`](#gettype)
-  - [`.description(description)`](#descriptiondescription-2)
-  - [`.required(required)`](#requiredrequired-1)
-  - [`.deprecated(deprecated)`](#deprecateddeprecated-1)
-  - [`.allowEmptyValue(allowEmptyValue)`](#allowemptyvalueallowemptyvalue)
-  - [`.style(style)`](#stylestyle)
-  - [`.explode(explode)`](#explodeexplode)
-  - [`.allowReserved(allowReserved)`](#allowreservedallowreserved)
-  - [`.schema(schema)`](#schemaschema)
-  - [`.examples(examples)`](#examplesexamples)
-  - [`.addContent(contentType, schema)`](#addcontentcontenttype-schema)
-  - [`.getSchemas()`](#getschemas-1)
-- [`bagger.getRequestSchema()`](#baggergetrequestschema)
+- [API Reference](#api-reference)
+  - [`bagger.configure()`](#baggerconfigure)
+    - [`.info(info)`](#infoinfo)
+    - [`.addServer(server)`](#addserverserver)
+    - [`.addSecurity(security)`](#addsecuritysecurity)
+    - [`.externalDocs(externalDocs)`](#externaldocsexternaldocs)
+  - [`bagger.compile()`](#baggercompile)
+  - [`bagger.addRequest(path, method)`](#baggeraddrequestpath-method)
+    - [`.addResponse(response)`](#addresponseresponse)
+    - [`.operationId(operationId)`](#operationidoperationid)
+    - [`.deprecated(deprecated)`](#deprecateddeprecated)
+    - [`.summary(summary)`](#summarysummary)
+    - [`.addTag(tag)`](#addtagtag)
+    - [`.addSecurity(scheme, scopes)`](#addsecurityscheme-scopes)
+    - [`.body(requestBody)`](#bodyrequestbody)
+    - [`.addParameter(parameter)`](#addparameterparameter)
+  - [`bagger.addComponent()`](#baggeraddcomponent)
+    - [Schema WIP?](#schema-wip)
+  - [`bagger.response(httpCode)`](#baggerresponsehttpcode)
+    - [`.description(description)`](#descriptiondescription)
+    - [`.content(mediaType, schema)`](#contentmediatype-schema)
+  - [`bagger.requestBody()`](#baggerrequestbody)
+    - [`.description(description)`](#descriptiondescription-1)
+    - [`.required(required)`](#requiredrequired)
+    - [`.content(contentType, schema)`](#contentcontenttype-schema)
+    - [`.getSchemas()`](#getschemas)
+  - [`bagger.parameter().<type>(name)`](#baggerparametertypename)
+    - [`.getType()`](#gettype)
+    - [`.description(description)`](#descriptiondescription-2)
+    - [`.required(required)`](#requiredrequired-1)
+    - [`.deprecated(deprecated)`](#deprecateddeprecated-1)
+    - [`.allowEmptyValue(allowEmptyValue)`](#allowemptyvalueallowemptyvalue)
+    - [`.style(style)`](#stylestyle)
+    - [`.explode(explode)`](#explodeexplode)
+    - [`.allowReserved(allowReserved)`](#allowreservedallowreserved)
+    - [`.schema(schema)`](#schemaschema)
+    - [`.examples(examples)`](#examplesexamples)
+    - [`.addContent(contentType, schema)`](#addcontentcontenttype-schema)
+    - [`.getSchemas()`](#getschemas-1)
+  - [`bagger.getRequestSchema()`](#baggergetrequestschema)
 
 ## `bagger.configure()`
 
@@ -151,7 +151,7 @@ Defining requests is the core of Swagger and OpenAPI 3. This method call will ad
 
 ```js
 const bagger = require('@digitalroute/bagger').default;
-const joi = require('@hapi/joi');
+const joi = require('joi');
 
 bagger
   .addRequest('/bags', 'get')
@@ -162,7 +162,7 @@ bagger
     bagger
       .parameter()
       .query('bagSize')
-      .schema(joi.string().valid(['10L', '20L', '30L'])
+      .schema(joi.string().valid('10L', '20L', '30L')
       .required(true)
   )
   .addResponse(
@@ -241,7 +241,7 @@ Read [Describing Responses](https://swagger.io/docs/specification/describing-res
 
 ```js
 const bagger = require('@digitalroute/bagger').default;
-const joi = require('@hapi/joi');
+const joi = require('joi');
 
 const successfulResponse = bagger
   .response(200)
@@ -273,7 +273,7 @@ Every response requires a description that describes the response. Markdown ([Co
 ### `.content(mediaType, schema)`
 
 - `mediaType`: string
-- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+- `schema`: Joi.Schema ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
 
 Responses can have a response body. They are described with `content()`. The media type describes the format of the response body. Examples are:
 
@@ -289,7 +289,7 @@ Create a request body used for defining a body in a bagger request.
 
 ```js
 const bagger = require('.');
-const joi = require('@hapi/joi');
+const joi = require('joi');
 
 const body = bagger
   .requestBody()
@@ -299,14 +299,14 @@ const body = bagger
     joi.object().keys({
       type: joi
         .string()
-        .valid(['backpack', 'duffel', 'sports'])
+        .valid('backpack', 'duffel', 'sports')
         .required(),
       size: joi
         .array()
         .items(
           joi
             .string()
-            .valid(['10L', '20L', '30L'])
+            .valid('10L', '20L', '30L')
             .required()
         )
         .required(),
@@ -333,7 +333,7 @@ Request bodies are optional by default. To mark the body as required, use requir
 ### `.content(contentType, schema)`
 
 - `contentType`: string
-- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+- `schema`: Joi.Schema ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
 
 Requests can have a requests body. They are described with `content()`. The media type describes the format of the response body. Examples are:
 
@@ -431,7 +431,7 @@ If you want a query parameter that is not percent-encoded, set allowReserved to 
 
 ### `.schema(schema)`
 
-- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+- `schema`: Joi.Schema ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
 
 To describe the parameter contents, you can use either the [`schema()`](#schemaschema) or [`addContent()`](addcontentcontenttype-schema) method.
 They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
@@ -442,7 +442,7 @@ Bagger uses joi schemas and translates them into OpenAPI 3 schemas.
 
 ### `.examples(examples)`
 
-- `examples`: `{ [key: string]: Joi.Schema }` ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+- `examples`: `{ [key: string]: Joi.Schema }` ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
 
 You can add examples to parameters to make OpenAPI specification of your web service clearer.
 Examples can be read by tools and libraries that process your API in some way.
@@ -453,7 +453,7 @@ The `examples` input object is an object where every key-value pair represents a
 ### `.addContent(contentType, schema)`
 
 - `contentType`: `string`
-- `schema`: Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+- `schema`: Joi.Schema ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
 
 To describe the parameter contents, you can use either the `schema()` or `addContent()` method.
 They are mutually exclusive and used in different scenarios. In most cases, you would use `schema()`.
@@ -467,7 +467,7 @@ filter={"type":"t-shirt","color":"blue"}
 In this case you need to define the schema by using `addContent()` like this:
 
 ```js
-const joi = require('@hapi/joi');
+const joi = require('joi');
 parameter.addContent(
   'application/json',
   joi.object().keys({

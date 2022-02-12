@@ -60,6 +60,7 @@ Object {
           "content": Object {
             "application/json": Object {
               "schema": Object {
+                "additionalProperties": false,
                 "properties": Object {
                   "bagType": Object {
                     "enum": Array [

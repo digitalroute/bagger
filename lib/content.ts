@@ -1,6 +1,6 @@
 import { parse as validateMediaType } from 'content-type';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { ContentObject } from 'openapi3-ts';
 
 export class BaggerInvalidMediaTypeError extends Error {}

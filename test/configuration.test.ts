@@ -1,5 +1,5 @@
 import bagger from '../lib/bagger';
-import * as joi from '@hapi/joi';
+import joi from 'joi';
 
 describe('Bagger compiler', () => {
   const defaultInfo = {
@@ -28,7 +28,7 @@ describe('Bagger compiler', () => {
     const schema = joi.object().keys({
       bagType: joi
         .string()
-        .valid(['backpack', 'sportsbag'])
+        .valid('backpack', 'sportsbag')
         .required()
     });
     bagger

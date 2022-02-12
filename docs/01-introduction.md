@@ -24,10 +24,10 @@ Install Bagger by running:
 npm init -y && npm install @digitalroute/bagger
 ```
 
-Bagger can be used with any web framework like koa or hapi, but we will use express for this example. We will also use swagger-ui-express to serve a Swagger web page.
+Bagger can be used with any web framework like koa or joi, but we will use express for this example. We will also use swagger-ui-express to serve a Swagger web page.
 
 ```
-npm install express swagger-ui-express @hapi/joi
+npm install express swagger-ui-express joi
 ```
 
 ### Create your server file
@@ -38,7 +38,7 @@ Create a file called `server.js` in the project root directory:
 const express = require('express');
 const bagger = require('@digitalroute/bagger').default;
 const swaggerUi = require('swagger-ui-express');
-const joi = require('@hapi/joi');
+const joi = require('joi');
 
 const app = express();
 
@@ -115,7 +115,7 @@ Update the beginning of `server.js` so that it includes `account.js`
 const express = require('express');
 const bagger = require('@digitalroute/bagger').default;
 const swaggerUi = require('swagger-ui-express');
-const joi = require('@hapi/joi');
+const joi = require('joi');
 require('./accounts'); // <-- new line
 
 // ...
