@@ -2,7 +2,7 @@
 
 [![npm (scoped)](https://img.shields.io/npm/v/@digitalroute/bagger?style=flat-square)](https://www.npmjs.com/package/@digitalroute/bagger)
 [![npm](https://img.shields.io/npm/dm/@digitalroute/bagger?style=flat-square)](https://www.npmjs.com/package/@digitalroute/bagger)
-[![CircleCI](https://img.shields.io/circleci/build/github/digitalroute/bagger/master?style=flat-square)](https://circleci.com/gh/digitalroute/workflows/bagger)
+[![Node.js Tests CI for PRs](https://github.com/digitalroute/bagger/actions/workflows/PR-Tests.yml/badge.svg)](https://github.com/digitalroute/bagger/actions/workflows/PR-Tests.yml)
 [![license](https://img.shields.io/github/license/digitalroute/bagger.svg?style=flat-square)](https://github.com/digitalroute/bagger/blob/master/LICENSE)
 
 A joi-compatible tool for building Swagger (Open API 3) documents. It enables developers to use the same joi schemas for validation and documentation, ensuring that API documentation never becomes stale.
