@@ -1,4 +1,4 @@
-import * as joi from 'joi';
+import { joi } from '../lib';
 import { BaggerParameter } from '../lib/parameters';
 
 describe('Parameters', () => {

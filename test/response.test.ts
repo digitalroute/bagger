@@ -1,5 +1,4 @@
-import bagger from '../lib/bagger';
-import joi from 'joi';
+import { bagger, joi } from '../lib';
 
 describe('Swagger Response', () => {
   test('Creating a bagger response does return isBagger = true', () => {

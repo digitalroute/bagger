@@ -1,5 +1,5 @@
 import { SchemaStorage } from '../lib/schema_storage';
-import * as joi from 'joi';
+import { joi } from '../lib';
 
 describe('Schema storage', () => {
   let schemaStorage: SchemaStorage;

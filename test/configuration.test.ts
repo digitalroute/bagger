@@ -1,4 +1,4 @@
-import bagger from '../lib/bagger';
+import { bagger } from '../lib';
 import joi from 'joi';
 
 describe('Bagger compiler', () => {

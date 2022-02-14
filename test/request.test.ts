@@ -1,5 +1,4 @@
-import bagger from '../lib/bagger';
-import * as joi from 'joi';
+import { bagger, joi } from '../lib';
 
 describe('Swagger Request', () => {
   test('Set a full request object', () => {
