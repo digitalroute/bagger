@@ -1,5 +1,5 @@
 import { Content } from '../lib/content';
-import joi from 'joi';
+import { joi } from '../lib';
 
 describe('Content objects', () => {
   test('Simple content object can be created and compiled', () => {

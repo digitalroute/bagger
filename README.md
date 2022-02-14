@@ -10,29 +10,26 @@ A joi-compatible tool for building Swagger (Open API 3) documents. It enables de
 ## Features
 
 - 🔨 **Builder pattern:** Dead simple api to create complex Swagger documents.
-- ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation.
+- ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation. Embeded Joi is now exposed by default.
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
 - 🔒 **Type safety:** Bagger always produces 100% valid Swagger documents. If you use TypeScript the compiler will enforce correctness in most cases, and otherwise Bagger will validate during compilation.
 
 ## Usage
 
 ```js
-// Use the default Bagger instance
-const bagger = require('@digitalroute/bagger').default;
+// Import as a classic javascript
+const bagger = require('@digitalroute/bagger').bagger;
 
 // OR
 
-// Create a new instance
-const { Bagger } = require('@digitalroute/bagger');
-const bagger = new Bagger();
+// Import the default instances ESModule / Typescript
+import { bagger } from '@digitalroute/bagger';
 ```
 
 ## Example
 
 ```js
-const { Bagger } = require('@digitalroute/bagger');
-const joi = require('joi');
-const bagger = new Bagger();
+import { bagger, joi } from '@digitalroute/bagger';
 
 bagger.configure({
   title: 'Bagger API',

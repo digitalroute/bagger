@@ -192,5 +192,4 @@ export class Bagger {
   }
 }
 
-const defaultInstance = new Bagger();
-export default defaultInstance;
+export const defaultInstance = new Bagger();

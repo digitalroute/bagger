@@ -7,7 +7,7 @@ import json from 'rollup-plugin-json';
 
 const pkg = require('./package.json');
 
-const libraryName = 'bagger';
+const libraryName = 'index';
 
 export default {
   input: `lib/${libraryName}.ts`,
