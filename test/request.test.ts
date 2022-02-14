@@ -1,5 +1,5 @@
 import bagger from '../lib/bagger';
-import * as joi from '@hapi/joi';
+import * as joi from 'joi';
 
 describe('Swagger Request', () => {
   test('Set a full request object', () => {

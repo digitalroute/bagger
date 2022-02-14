@@ -1,9 +1,9 @@
-import * as joi from '@hapi/joi';
+import * as joi from 'joi';
 import { BaggerParameter } from '../lib/parameters';
 
 describe('Parameters', () => {
   test('Add path parameter with schema', () => {
-    const schema = joi.string().valid(['backpack', 'duffel']);
+    const schema = joi.string().valid('backpack', 'duffel');
     const parameter = new BaggerParameter('path', 'bagType');
     parameter.schema(schema);
     expect(parameter.compile()).toMatchSnapshot();

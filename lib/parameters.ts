@@ -1,6 +1,6 @@
 import { ParameterObject, ParameterStyle, ReferenceObject, ExampleObject } from 'openapi3-ts';
 import { Content, ContentSchemas } from './content';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { createSwaggerDefinition } from './utils/create_swagger_definition';
 
 class BaggerContentDefinedForParameterError extends Error {}
@@ -131,7 +131,7 @@ export class BaggerParameter {
    * You can add examples to parameters to make OpenAPI specification of your web service clearer.
    * Examples can be read by tools and libraries that process your API in some way.
    * For example, an API mocking tool can use sample values to generate mock requests.
-   * @param examples An object with Joi.Schema ([link](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b8183c0147e7412a4e0414a5456441789473b4d8/types/hapi__joi/index.d.ts#L304))
+   * @param examples An object with Joi.Schema ([link](https://github.com/sideway/joi/blob/master/lib/index.d.ts#L745))
    */
   public examples(examples: ExamplesObject): BaggerParameter {
     this.settings.examples = examples;
@@ -151,7 +151,7 @@ export class BaggerParameter {
    * In this case you need to define the schema by using `addContent()` like this:
    *
    * ```js
-   * const joi = require('@hapi/joi')
+   * const joi = require('joi')
    * parameter.addContent('application/json', joi.object().keys({
    *  type: joi.string(),
    *  color: joi.string()

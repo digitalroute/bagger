@@ -15,7 +15,7 @@ import {
   BaggerSecurityComponent,
   SecuritySchemeComponentObject
 } from './component';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 
 class BaggerMultipleComponentsWithSameNameFoundError extends Error {}
 class BaggerComponentNotFoundError extends Error {}

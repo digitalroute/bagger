@@ -39,7 +39,7 @@ export class Bagger {
    * @example
    * ```js
    * const bagger = require('.');
-   * const joi = require('@hapi/joi');
+   * const joi = require('joi');
    *
    * bagger
    *   .addRequest('/bags', 'get')
@@ -50,7 +50,7 @@ export class Bagger {
    *     bagger
    *       .parameter()
    *       .query('bagSize')
-   *       .schema(joi.string().valid(['10L', '20L', '30L'])
+   *       .schema(joi.string().valid('10L', '20L', '30L')
    *       .required(true)
    *   )
    *   .addResponse(
@@ -139,15 +139,15 @@ export class Bagger {
    * @example
    * ```js
    * const bagger = require('.');
-   * const joi = require('@hapi/joi');
+   * const joi = require('joi');
    *
    * const body = bagger
    *   .requestBody()
    *   .description('Create a bag')
    *   .content('application/json',
    *     joi.object().keys({
-   *       type: joi.string().valid(['backpack', 'duffel', 'sports']).required(),
-   *       size: joi.array().items(joi.string().valid(['10L', '20L', '30L']).required()).required(),
+   *       type: joi.string().valid('backpack', 'duffel', 'sports').required(),
+   *       size: joi.array().items(joi.string().valid('10L', '20L', '30L').required()).required(),
    *       description: joi.string().optional()
    *     })
    *   )

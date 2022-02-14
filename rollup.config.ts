@@ -15,16 +15,7 @@ export default {
     { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
-  external: [
-    '@types/content-type',
-    '@types/hapi__joi',
-    'ajv',
-    'content-type',
-    'joi',
-    'joi-to-swagger',
-    'json-schema-to-openapi-schema',
-    'openapi3-ts'
-  ],
+  external: ['@types/content-type', 'ajv', 'content-type', 'joi', 'joi-to-swagger', 'openapi3-ts'],
   watch: {
     include: 'lib/**'
   },

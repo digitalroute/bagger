@@ -31,7 +31,7 @@ const bagger = new Bagger();
 
 ```js
 const { Bagger } = require('@digitalroute/bagger');
-const joi = require('@hapi/joi');
+const joi = require('joi');
 const bagger = new Bagger();
 
 bagger.configure({

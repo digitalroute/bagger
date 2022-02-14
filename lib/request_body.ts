@@ -1,5 +1,5 @@
 import { Content, ContentSchemas } from './content';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { RequestBodyObject } from 'openapi3-ts';
 
 export class BaggerUndefinedSchemaError extends Error {}
@@ -30,7 +30,7 @@ export class BaggerRequestBody {
   /**
    * Content describes the content of a body.
    * @param mediaType The media type of the content. Like 'application/json' or 'text/plain'. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types for more information
-   * @param schema A `hapi/joi` schema describing the content of the body. This can also be used for validating requests in run time by using `.getSchema()`.
+   * @param schema A `joi` schema describing the content of the body. This can also be used for validating requests in run time by using `.getSchema()`.
    */
   public content(mediaType: string, schema: Schema): BaggerRequestBody {
     this._content.add(mediaType, schema);
@@ -38,7 +38,7 @@ export class BaggerRequestBody {
   }
 
   /**
-   * Get the `hapi/joi` schemas that is used to describe the body content. It can be used for validating requests in runtime.
+   * Get the `joi` schemas that is used to describe the body content. It can be used for validating requests in runtime.
    */
   public getSchemas(): ContentSchemas {
     return this._content.getSchemas();

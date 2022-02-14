@@ -1,4 +1,4 @@
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { ContentSchemas } from './content';
 
 export class BaggerSchemaDoesNotExistForKeyError extends Error {
