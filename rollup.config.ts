@@ -10,7 +10,7 @@ const pkg = require('./package.json');
 const libEntrypoint = 'index';
 
 export default {
-  input: `lib/${libraryName}.ts`,
+  input: `lib/${libEntrypoint}.ts`,
   output: [
     { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
     { file: pkg.module, format: 'es', sourcemap: true }
