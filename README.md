@@ -10,7 +10,7 @@ A joi-compatible tool for building Swagger (Open API 3) documents. It enables de
 ## Features
 
 - 🔨 **Builder pattern:** Dead simple api to create complex Swagger documents.
-- ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation. Embeded Joi is now exposed by default.
+- ✨ **joi compatibility:** Enables developers to use the same schemas for validation and documentation. Embedded Joi is now exposed by default.
 - 🔎 **Intellisense:** Really nice intellisense suggestions, and TypeScript definitions.
 - 🔒 **Type safety:** Bagger always produces 100% valid Swagger documents. If you use TypeScript the compiler will enforce correctness in most cases, and otherwise Bagger will validate during compilation.
 
