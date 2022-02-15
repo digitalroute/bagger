@@ -18,7 +18,7 @@ A joi-compatible tool for building Swagger (Open API 3) documents. It enables de
 
 ```js
 // Import as a classic javascript
-const bagger = require('@digitalroute/bagger').bagger;
+const { bagger } = require('@digitalroute/bagger');
 
 // OR
 
