@@ -12,7 +12,7 @@ const libEntrypoint = 'index';
 export default {
   input: `lib/${libEntrypoint}.ts`,
   output: [
-    { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
+    { file: pkg.main, name: camelCase(libEntrypoint), format: 'umd', sourcemap: true },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
   external: ['@types/content-type', 'ajv', 'content-type', 'joi', 'joi-to-swagger', 'openapi3-ts'],
