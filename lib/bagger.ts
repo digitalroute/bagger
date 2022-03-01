@@ -27,7 +27,7 @@ export class Bagger {
    * @param method HTTP method like 'GET' or 'PUT'
    * @param contentType
    */
-  public getRequestSchema(path: string, method: string, contentType: string = 'application/json'): SchemaDefinition {
+  public getRequestSchema(path: string, method: string, contentType = 'application/json'): SchemaDefinition {
     return this.schemaStorage.getRequestSchema(path, method, contentType);
   }
 

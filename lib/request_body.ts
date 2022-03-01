@@ -6,7 +6,7 @@ export class BaggerUndefinedSchemaError extends Error {}
 
 export class BaggerRequestBody {
   private _description?: string;
-  private _required: boolean = false;
+  private _required = false;
   private _content: Content = new Content();
 
   /**
