@@ -90,7 +90,7 @@ export class SchemaStorage {
     });
   }
 
-  public getRequestSchema(path: string, method: string, contentType: string = 'application/json'): SchemaDefinition {
+  public getRequestSchema(path: string, method: string, contentType = 'application/json'): SchemaDefinition {
     const key = this.buildKey(path, method);
     const schema = this.requestToSchema[key];
     if (!schema || !schema[contentType]) {
