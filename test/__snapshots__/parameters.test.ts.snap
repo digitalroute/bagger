@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Parameters Add path parameter with schema 1`] = `
-Object {
+{
   "in": "path",
   "name": "bagType",
-  "schema": Object {
-    "enum": Array [
+  "schema": {
+    "enum": [
       "backpack",
       "duffel",
     ],
