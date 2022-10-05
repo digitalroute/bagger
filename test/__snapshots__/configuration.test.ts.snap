@@ -1,26 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Bagger compiler A request can be included 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {},
-    "securitySchemes": Object {},
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {},
   },
-  "info": Object {
+  "info": {
     "description": "Provides resources related to building swagger definitions",
     "title": "Bagger API",
     "version": "v1",
   },
   "openapi": "3.0.0",
-  "paths": Object {
-    "/bags": Object {
-      "get": Object {
-        "responses": Object {
-          "200": Object {
+  "paths": {
+    "/bags": {
+      "get": {
+        "responses": {
+          "200": {
             "description": "Good fetch",
           },
         },
-        "tags": Array [
+        "tags": [
           "bags",
           "users",
         ],
@@ -31,46 +31,46 @@ Object {
 `;
 
 exports[`Bagger compiler Add a request and get the schema 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {},
-    "securitySchemes": Object {},
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {},
   },
-  "info": Object {
+  "info": {
     "description": "Provides resources related to building swagger definitions",
     "title": "Bagger API",
     "version": "v1",
   },
   "openapi": "3.0.0",
-  "paths": Object {
-    "/bags": Object {
-      "get": Object {
-        "responses": Object {
-          "200": Object {
+  "paths": {
+    "/bags": {
+      "get": {
+        "responses": {
+          "200": {
             "description": "Good fetch",
           },
         },
-        "tags": Array [
+        "tags": [
           "bags",
           "users",
         ],
       },
-      "post": Object {
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "additionalProperties": false,
-                "properties": Object {
-                  "bagType": Object {
-                    "enum": Array [
+                "properties": {
+                  "bagType": {
+                    "enum": [
                       "backpack",
                       "sportsbag",
                     ],
                     "type": "string",
                   },
                 },
-                "required": Array [
+                "required": [
                   "bagType",
                 ],
                 "type": "object",
@@ -79,12 +79,12 @@ Object {
           },
           "required": false,
         },
-        "responses": Object {
-          "200": Object {
+        "responses": {
+          "200": {
             "description": "Bought a bag!",
           },
         },
-        "tags": Array [
+        "tags": [
           "bags",
         ],
       },
@@ -94,17 +94,17 @@ Object {
 `;
 
 exports[`Bagger compiler An empty definition should compile 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {},
-    "securitySchemes": Object {},
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {},
   },
-  "info": Object {
+  "info": {
     "description": "Provides resources related to building swagger definitions",
     "title": "Bagger API",
     "version": "v1",
   },
   "openapi": "3.0.0",
-  "paths": Object {},
+  "paths": {},
 }
 `;
