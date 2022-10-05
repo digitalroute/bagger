@@ -12,11 +12,8 @@ export function cleanObject<T extends { [key: string]: any }>(pollutedObject: T)
     .filter(([, value]): boolean => value !== undefined)
     .map(([key, value]: Entry): Entry => [key, isObject(value) ? cleanObject(value) : value]);
 
-  return entries.reduce(
-    (cleanObject, [currentKey, currentValue]): { [key: string]: any } => {
-      cleanObject[currentKey] = currentValue;
-      return cleanObject;
-    },
-    {} as any
-  );
+  return entries.reduce((cleanObject, [currentKey, currentValue]): { [key: string]: any } => {
+    cleanObject[currentKey] = currentValue;
+    return cleanObject;
+  }, {} as any);
 }
