@@ -1,4 +1,4 @@
-import { bagger } from './bagger';
+import { bagger, Bagger } from './bagger';
 import joi from 'joi';
 
-export { bagger, joi };
+export { bagger, joi, Bagger };
